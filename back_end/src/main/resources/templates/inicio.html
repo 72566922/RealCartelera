@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Cartelera - Pagar</title>
+    <!-- SDK de PayPal -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AeXfZtXSoZprWVtBkEUxcVO3Z-trMSpnCRfwn42gkB0Bw0IFxie9qLR__IVezThSzGXwKFLZhDBiBqnv&currency=USD"></script>
+</head>
+<body>
+    <h1>Compra tus entradas</h1>
+    
+    <!-- Formulario para ingresar el monto de compra -->
+    <form id="paymentForm">
+        <label for="amount">Monto a pagar:</label>
+        <input type="number" id="amount" name="amount" step="0.01" value="2.5" required>
+        <button type="submit">Proceder a pagar</button>
+    </form>
+
+    <!-- Contenedor del botón de PayPal -->
+    <div id="paypal-button-container"></div>
+
+    <script>
+        // Capturar el monto del formulario
+        document.getElementById('paymentForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var amount = document.getElementById('amount').value;
+            
+            // Renderizar el botón de PayPal con el monto dinámico
+            paypal.Buttons({
+                style: {
+                    color: 'blue',
+                    shape: 'pill',
+                    label: 'pay'
+                },
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount  // Aquí se toma el valor ingresado en el formulario
+                            }
+                        }]
+                    });
+                },
+                // Cuando el pago se aprueba
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        const amountPaid = details.purchase_units[0].amount.value;
+                        console.log('Pago completado con éxito por ' + details.payer.name.given_name + '. Monto pagado: ' + amountPaid + ' USD');
+                        
+                        // Aquí puedes redirigir al backend para completar la transacción
+                        window.location.href = `/success?paymentId=${data.paymentID}&PayerID=${data.payerID}`;
+                    });
+                },
+                // Cuando el usuario cancela el pago
+                onCancel: function (data) {
+                    alert('Pago cancelado');
+                },
+                // Si ocurre un error
+                onError: function (err) {
+                    console.error('Error en el pago: ', err);
+                }
+            }).render('#paypal-button-container');
+        });
+    </script>
+</body>
+</html>

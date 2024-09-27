@@ -1,0 +1,36 @@
+# Ignore build and output directories aea
+target/
+bin/
+
+# Maven and Gradle specific files
+*.log
+*.war
+*.ear
+*.jar
+*.class
+
+# Ignore IDE-specific files
+/.idea/
+/*.iml
+/.project
+/.classpath
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Maven or Gradle wrapper binaries
+.mvn/
+!**/mvnw
+!**/mvnw.cmd
+.gradle/
+!**/gradlew
+!**/gradlew.bat
+
+# Ignore local environment settings
+.env
+*.env
+
+# Logs and temporary files
+*.log
+*.tmp

@@ -1,0 +1,37 @@
+
+/* src/headerComponent/styleHeader/header.css */
+.bg-custom {
+  background-color: #0a7a26; /* Color de fondo personalizado */
+}
+
+header {
+    width: 100%; /* Asegúrate de que el header ocupe todo el ancho */
+    padding: 1rem; /* Espaciado interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para el header */
+  }
+  
+  h1 {
+    font-size: 1.5rem; /* Tamaño de fuente para el encabezado */
+  }
+  
+  /* Estilos para la navegación */
+  nav ul {
+    display: flex; /* Para que los elementos de la lista se alineen horizontalmente */
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en múltiples líneas si es necesario */
+  }
+  
+  nav button {
+    min-width: 200px; /* Asegura un ancho mínimo para el botón */
+  }
+  
+  /* Media Queries para Responsividad */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.25rem; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
+  
+    nav button {
+      width: 100%; /* Hacer que el botón ocupe el ancho completo en pantallas pequeñas */
+    }
+  }
+  
