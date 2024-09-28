@@ -1,11 +1,12 @@
-/* src/footerComponent/footer.css */
-.footer {
-    margin: 0; /* Asegura que no haya márgenes */
-    padding: 10px 0; /* Espaciado vertical, ajusta según sea necesario */
-    position: relative; /* Ajusta la posición si es necesario */
-    background-color: #333; /* Color de fondo del footer */
-    color: white; /* Color de texto del footer */
-    text-align: center; /* Centrar texto */
-    width: 100%; /* Asegúrate de que ocupe todo el ancho */
-  }
-  
+.bg-dark {
+  background-color: #343a40; /* Color de fondo oscuro */
+}
+
+.text-white {
+  color: white !important; /* Asegurarse de que el texto sea blanco */
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+}

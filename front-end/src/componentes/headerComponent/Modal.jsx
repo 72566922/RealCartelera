@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
-  // Imprimir los datos del carrito en la consola
-  console.log("Artículos en el carrito:", cartItems);
-
-  const handleSellClick = () => {
-    // Imprimir los datos que se van a vender
-    console.log("Artículos a vender:", cartItems);
-    handleSell(); // Llama a la función handleSell después de imprimir
-  };
+  useEffect(() => {
+    if (showModal) {
+      window.paypal.Buttons({
+        style: {
+          color: 'blue',
+          shape: 'pill',
+          label: 'pay',
+        },
+        createOrder: function (data, actions) {
+          const totalAmount = cartItems.reduce((total, item) => total + item.precioTotal, 0);
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: totalAmount.toFixed(2), // Total del carrito
+              },
+            }],
+          });
+        },
+        onApprove: function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            console.log('Pago completado con éxito por ' + details.payer.name.given_name);
+            handleSell(); // Llamar a handleSell para completar la venta
+            handleModalToggle(); // Cerrar el modal
+          });
+        },
+        onError: function (err) {
+          console.error('Error en el pago: ', err);
+        }
+      }).render('#paypal-button-container');
+    }
+  }, [showModal, cartItems, handleSell, handleModalToggle]);
 
   return (
     showModal && (
@@ -20,24 +43,20 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
               <button type="button" className="btn-close" onClick={handleModalToggle} aria-label="Close">X</button>
             </div>
             <div className="modal-body">
-              <p>Aquí puedes ver los artículos en tu carrito:</p>
               <ul>
                 {cartItems.length > 0 ? (
-                  cartItems.map((item, index) => {
-                    console.log(`Ítem en carrito: ${item.dulce?.nombre}, Cantidad: ${item.cantidadSeleccionada}, Precio total: ${item.precioTotal}`);
-                    return (
-                      <li key={index}>
-                        {item.dulce?.nombre} - {item.cantidadSeleccionada} unidades - ${item.precioTotal}
-                      </li>
-                    );
-                  })
+                  cartItems.map((item, index) => (
+                    <li key={index}>
+                      {item.dulce?.nombre} - {item.cantidadSeleccionada} unidades - ${item.precioTotal}
+                    </li>
+                  ))
                 ) : (
                   <li>No hay artículos en el carrito.</li>
                 )}
               </ul>
-              <button type="button" className="btn btn-success" onClick={handleSellClick}>
-                Vender
-              </button>
+
+              {/* Contenedor para el botón de PayPal */}
+              <div id="paypal-button-container"></div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={handleModalToggle}>
