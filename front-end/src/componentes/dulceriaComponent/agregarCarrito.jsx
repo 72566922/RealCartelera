@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BotonVenta({ manejarVenta, disabled }) {
+function AgregarCarrito({ manejarVenta, disabled }) {
   return (
     <div className='container'>
       <button className="btn btn-primary" onClick={manejarVenta} disabled={disabled}>
@@ -10,4 +10,4 @@ function BotonVenta({ manejarVenta, disabled }) {
   );
 }
 
-export default BotonVenta;
+export default AgregarCarrito;

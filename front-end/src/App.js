@@ -6,18 +6,21 @@ import Footer from './componentes/footer';
 import RoutesComponent from './componentes/headerComponent/Route';
 import BebidaService from './services/BebidaService';
 import ComidaService from './services/ComidaService'; // Asegúrate de que este archivo existe
+import BoletoService from './services/BoletoService'; // Corrección aquí
 
 function App() {
-  // Estado para almacenar las bebidas, comidas y el carrito
+  // Estado para almacenar las bebidas, comidas, boletos y el carrito
   const [bebidas, setBebidas] = useState([]);
+  const [boletos, setBoletos] = useState([]); // Estado para los boletos
   const [comidas, setComidas] = useState([]); // Estado para las comidas
   const [cart, setCart] = useState([]);
 
   // Efecto que se ejecuta al montar el componente
   useEffect(() => {
-    console.log("Component App montado, llamando a fetchBebidas y fetchComidas");
+    console.log("Component App montado, llamando a fetchBebidas, fetchComidas y fetchBoletos");
     fetchBebidas(); // Llama a la función para obtener las bebidas
     fetchComidas(); // Obtener las comidas al cargar el componente
+    fetchBoletos(); // Obtener los boletos al cargar el componente
   }, []); // Dependencias vacías para ejecutar solo al montar
 
   // Función para obtener todas las bebidas
@@ -31,10 +34,21 @@ function App() {
       .catch(error => console.error('Error al obtener las bebidas', error)); // Manejo de errores
   };
 
+  // Función para obtener todos los boletos
+  const fetchBoletos = () => {
+    console.log("Llamando a BoletoService para obtener los boletos...");
+    BoletoService.getAllBoletos() // Corrección aquí en el nombre del servicio
+      .then(response => {
+        console.log("Boletos obtenidos:", response.data);
+        setBoletos(response.data); // Actualiza el estado con los boletos obtenidos
+      })
+      .catch(error => console.error('Error al obtener los boletos', error)); // Manejo de errores
+  };
+
   // Función para obtener todas las comidas
   const fetchComidas = () => {
     console.log("Llamando a ComidaService para obtener las comidas...");
-    ComidaService.getAllComidas() // Asume que `ComidaService` tiene un método para obtener comidas
+    ComidaService.getAllComidas()
       .then(response => {
         console.log("Comidas obtenidas:", response.data);
         setComidas(response.data); // Actualiza el estado con las comidas obtenidas
@@ -122,6 +136,7 @@ function App() {
           <RoutesComponent 
             bebidas={bebidas} 
             comidas={comidas} 
+            boletos={boletos} 
             addToCartBebida={addToCartBebida} 
             addToCartComida={addToCartComida} 
           /> {/* Rutas y componentes */}

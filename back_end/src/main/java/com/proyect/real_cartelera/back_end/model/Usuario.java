@@ -10,28 +10,32 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_usuario;
+
     private String nombre;
-    private String correo;
-    private String contraseña;
+    private String gmail;
+    private String password;
+    private String celular;
+
 
     // Constructor vacío (requerido por JPA)
     public Usuario() {}
 
     // Constructor con parámetros
-    public Usuario(String nombre, String correo, String contraseña) {
+    public Usuario(String nombre, String gmail, String password, String celular) {
         this.nombre = nombre;
-        this.correo = correo;
-        this.contraseña = contraseña;
+        this.gmail = gmail;
+        this.password = password;
+        this.celular = celular;
     }
 
     // Getters y Setters
     public Long getId() {
-        return id;
+        return id_usuario;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
     public String getNombre() {
@@ -42,19 +46,39 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getGmail() {
+        return gmail;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+
+    // Método toString para depuración
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id_usuario +
+                ", nombre='" + nombre + '\'' +
+                ", gmail='" + gmail + '\'' +
+                ", celular='" + celular + '\'' +
+                '}';
     }
 }

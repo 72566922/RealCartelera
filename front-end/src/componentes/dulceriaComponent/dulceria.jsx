@@ -1,9 +1,9 @@
 // Dulceria.js
 import React, { useState } from 'react';
-import BebidaSelector from './BebidaSelector';
-import ComidaSelector from './ComidaSelector';
+import BebidaSelector from './bebidas/BebidaSelector';
+import ComidaSelector from './comida/ComidaSelector';
 import InputCantidad from './InputCantidad';
-import BotonVenta from './BotonVenta';
+import AgregarCarrito from './agregarCarrito';
 import './styleDulceria/dulceria.css';
 
 function Dulceria({ bebidas, comidas, addToCartBebida, addToCartComida }) {
@@ -63,13 +63,13 @@ function Dulceria({ bebidas, comidas, addToCartBebida, addToCartComida }) {
         <div className="col-md-6 mb-3">
           <BebidaSelector bebidas={bebidas} setBebidaSeleccionada={setBebidaSeleccionada} />
           <InputCantidad cantidad={cantidadBebida} setCantidad={setCantidadBebida} />
-          <BotonVenta manejarVenta={manejarVentaBebida} text="Agregar Bebida" />
+          <AgregarCarrito manejarVenta={manejarVentaBebida} text="Agregar Bebida" />
         </div>
 
         <div className="col-md-6 mb-3">
           <ComidaSelector comidas={comidas} setComidaSeleccionada={setComidaSeleccionada} />
           <InputCantidad cantidad={cantidadComida} setCantidad={setCantidadComida} />
-          <BotonVenta manejarVenta={manejarVentaComida} text="Agregar Comida" />
+          <AgregarCarrito manejarVenta={manejarVentaComida} text="Agregar Comida" />
         </div>
       </div>
     </div>
