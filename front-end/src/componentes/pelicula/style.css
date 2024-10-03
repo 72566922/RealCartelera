@@ -1,0 +1,34 @@
+/* src/styles.css */
+
+/* Estilos personalizados */
+.galeria-peliculas {
+    margin: 20px 0;
+}
+
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.pelicula-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
+}
+
+.pelicula-img {
+    width: 100%;
+    height: 100%; /* Establecer una altura fija para todas las imágenes */
+    object-fit: cover; /* Asegura que la imagen se recorte y mantenga la proporción */
+    border-radius: 5px;
+    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
+}
+
+/* Efecto hover */
+.pelicula-item:hover .pelicula-img {
+    transform: scale(1.1); /* Aumentar el tamaño de la imagen al 110% */
+}

@@ -37,7 +37,7 @@ function Header({ cartItems, handleSell }) {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mx-auto mb-2 mb-md-0">
               <li className="nav-item">
-                <Link to="/" className="nav-link">Login</Link>
+                <Link to="/login" className="nav-link">Login</Link>
               </li>
               <li className="nav-item">
                 <Link to="/dulceria" className="nav-link">MAPA</Link>

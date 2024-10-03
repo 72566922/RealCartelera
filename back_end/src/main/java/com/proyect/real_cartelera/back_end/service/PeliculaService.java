@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyect.real_cartelera.back_end.model.Pelicula;
+import com.proyect.real_cartelera.back_end.model.Categoria; // Asegúrate de importar Categoria
 import com.proyect.real_cartelera.back_end.repository.PeliculaRepository;
 
 import java.util.List;
@@ -36,6 +37,10 @@ public class PeliculaService {
         return peliculaRepository.save(pelicula);
     }
 
+    public List<Pelicula> getPeliculasPorCategoria(Categoria categoria) { // Cambiado a Categoria
+        return peliculaRepository.findByCategoria(categoria); // Suponiendo que tienes este método en tu repositorio
+    }
+    
     // Actualizar el estado de una película
     public Pelicula updatePeliculaEstado(Long id, String nuevoEstado) {
         Pelicula pelicula = getPeliculaById(id);

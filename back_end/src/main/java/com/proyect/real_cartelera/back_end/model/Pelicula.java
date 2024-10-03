@@ -11,13 +11,16 @@ public class Pelicula {
     private String nombre;
     private String descripcion;
     private String estado;
-    private String categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    private Categoria categoria;  // Cambiado a Categoria
 
     // Constructor vacío (requerido por JPA)
     public Pelicula() {}
 
     // Constructor con parámetros
-    public Pelicula(String nombre, String descripcion, String estado, String categoria) {
+    public Pelicula(String nombre, String descripcion, String estado, Categoria categoria) { // Cambiado a Categoria
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.estado = estado;
@@ -57,11 +60,11 @@ public class Pelicula {
         this.estado = estado;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() { // Cambiado a Categoria
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) { // Cambiado a Categoria
         this.categoria = categoria;
     }
 
@@ -71,7 +74,7 @@ public class Pelicula {
         return "Pelicula{" +
                 "id_pelicula=" + id_pelicula +
                 ", nombre='" + nombre + '\'' +
-                ", categoria='" + categoria + '\'' +
+                ", categoria='" + (categoria != null ? categoria.getNombre() : "N/A") + '\'' + // Mejor manejo de null
                 ", descripcion='" + descripcion + '\'' +
                 ", estado='" + estado + '\'' +
                 '}';

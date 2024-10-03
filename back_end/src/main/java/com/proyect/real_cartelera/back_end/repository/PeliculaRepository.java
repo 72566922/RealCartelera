@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.proyect.real_cartelera.back_end.model.Pelicula;
+import com.proyect.real_cartelera.back_end.model.Categoria; // Asegúrate de importar Categoria
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ import java.util.List;
 public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     // Método para obtener las películas habilitadas
     List<Pelicula> findByEstado(String estado);
+    List<Pelicula> findByCategoria(Categoria categoria); // Cambiado a Categoria
 }

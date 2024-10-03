@@ -39,7 +39,7 @@ function App() {
   
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 App">
       <Router>
         <Header cartItems={cart} handleSell={handleSell} />
         <div className='container'>
