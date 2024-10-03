@@ -34,14 +34,14 @@ public class BoletoController {
     // Crear un nuevo boleto
     @PostMapping
     public ResponseEntity<Boleto> createBoleto(@RequestBody Boleto boleto) {
-        Boleto newBoleto = boletoService.createBoleto(boleto.getFuncion(), boleto.getAsiento(), boleto.getCliente());
+        Boleto newBoleto = boletoService.createBoleto(boleto.getFuncion(), boleto.getAsiento());
         return new ResponseEntity<>(newBoleto, HttpStatus.CREATED);
     }
 
     // Actualizar un boleto existente
     @PutMapping("/{id}")
     public ResponseEntity<Boleto> updateBoleto(@PathVariable Long id, @RequestBody Boleto boleto) {
-        Boleto updatedBoleto = boletoService.updateBoleto(id, boleto.getFuncion(), boleto.getAsiento(), boleto.getCliente());
+        Boleto updatedBoleto = boletoService.updateBoleto(id, boleto.getFuncion(), boleto.getAsiento());
         return ResponseEntity.ok(updatedBoleto);
     }
 

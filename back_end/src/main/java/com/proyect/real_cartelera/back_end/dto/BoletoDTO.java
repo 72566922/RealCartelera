@@ -12,14 +12,12 @@ public class BoletoDTO {
     private String nombreDistrito;
 
     // Constructor
-    public BoletoDTO(Long idBoleto, String nombreAsiento, String horaFuncion, String direccionCliente,
-                     String nombreUsuario, String nombreSala, String pisoSala, String direccionSede,
-                     String nombreDistrito) {
+    public BoletoDTO(Long idBoleto, String nombreAsiento, String horaFuncion,
+            String nombreSala, String pisoSala, String direccionSede,
+            String nombreDistrito) {
         this.idBoleto = idBoleto;
         this.nombreAsiento = nombreAsiento;
         this.horaFuncion = horaFuncion;
-        this.direccionCliente = direccionCliente;
-        this.nombreUsuario = nombreUsuario;
         this.nombreSala = nombreSala;
         this.pisoSala = pisoSala;
         this.direccionSede = direccionSede;

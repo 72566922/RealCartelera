@@ -4,145 +4,54 @@ import './App.css';
 import Header from './componentes/headerComponent/header';
 import Footer from './componentes/footer';
 import RoutesComponent from './componentes/headerComponent/Route';
-import BebidaService from './services/BebidaService';
-import ComidaService from './services/ComidaService'; // Asegúrate de que este archivo existe
-import BoletoService from './services/BoletoService'; // Corrección aquí
+import ApiService from './services/ApiService'; // Importamos el nuevo servicio
+import Cart from './Cart'; // Importamos el nuevo componente de carrito
 
 function App() {
-  // Estado para almacenar las bebidas, comidas, boletos y el carrito
   const [bebidas, setBebidas] = useState([]);
-  const [boletos, setBoletos] = useState([]); // Estado para los boletos
-  const [comidas, setComidas] = useState([]); // Estado para las comidas
+  const [comidas, setComidas] = useState([]);
   const [cart, setCart] = useState([]);
 
-  // Efecto que se ejecuta al montar el componente
   useEffect(() => {
-    console.log("Component App montado, llamando a fetchBebidas, fetchComidas y fetchBoletos");
-    fetchBebidas(); // Llama a la función para obtener las bebidas
-    fetchComidas(); // Obtener las comidas al cargar el componente
-    fetchBoletos(); // Obtener los boletos al cargar el componente
-  }, []); // Dependencias vacías para ejecutar solo al montar
+    fetchBebidas();
+    fetchComidas();
+  }, []);
 
-  // Función para obtener todas las bebidas
   const fetchBebidas = () => {
-    console.log("Llamando a BebidaService para obtener las bebidas...");
-    BebidaService.getAllBebidas()
+    ApiService.getAllBebidas()
       .then(response => {
-        console.log("Bebidas obtenidas:", response.data);
-        setBebidas(response.data); // Actualiza el estado con las bebidas obtenidas
+        setBebidas(response.data);
       })
-      .catch(error => console.error('Error al obtener las bebidas', error)); // Manejo de errores
+      .catch(error => console.error('Error al obtener las bebidas', error));
   };
 
-  // Función para obtener todos los boletos
-  const fetchBoletos = () => {
-    console.log("Llamando a BoletoService para obtener los boletos...");
-    BoletoService.getAllBoletos() // Corrección aquí en el nombre del servicio
-      .then(response => {
-        console.log("Boletos obtenidos:", response.data);
-        setBoletos(response.data); // Actualiza el estado con los boletos obtenidos
-      })
-      .catch(error => console.error('Error al obtener los boletos', error)); // Manejo de errores
-  };
-
-  // Función para obtener todas las comidas
   const fetchComidas = () => {
-    console.log("Llamando a ComidaService para obtener las comidas...");
-    ComidaService.getAllComidas()
+    ApiService.getAllComidas()
       .then(response => {
-        console.log("Comidas obtenidas:", response.data);
-        setComidas(response.data); // Actualiza el estado con las comidas obtenidas
+        setComidas(response.data);
       })
-      .catch(error => console.error('Error al obtener las comidas', error)); // Manejo de errores
+      .catch(error => console.error('Error al obtener las comidas', error));
   };
 
-  // Función para añadir una bebida al carrito
-  const addToCartBebida = (bebida) => {
-    const existingItemIndex = cart.findIndex(cartItem => 
-      cartItem.id_bebida === bebida.id_bebida // Verifica por id_bebida
-    );
-
-    if (existingItemIndex >= 0) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].cantidadSeleccionada += bebida.cantidadSeleccionada;
-      updatedCart[existingItemIndex].precioTotal += bebida.precioTotal;
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, bebida]);
-      console.log("Nueva bebida agregada al carrito:", bebida);
-    }
-  };
-
-  // Función para añadir una comida al carrito
-  const addToCartComida = (comida) => {
-    const existingItemIndex = cart.findIndex(cartItem => 
-      cartItem.id_comida === comida.id_comida // Verifica por id_comida
-    );
-
-    if (existingItemIndex >= 0) {
-      const updatedCart = [...cart];
-      updatedCart[existingItemIndex].cantidadSeleccionada += comida.cantidadSeleccionada;
-      updatedCart[existingItemIndex].precioTotal += comida.precioTotal;
-      setCart(updatedCart);
-    } else {
-      setCart([...cart, comida]);
-      console.log("Nueva comida agregada al carrito:", comida);
-    }
-  };
-
-  // Función para procesar la venta
   const handleSell = () => {
-    console.log("Procesando venta...");
-    
-    const ventasBebidas = cart
-      .filter(item => item.id_bebida) // Filtrar solo bebidas
-      .map(item => ({
-        id: item.id_bebida,
-        cantidadVendida: item.cantidadSeleccionada // Prepara el objeto para la venta
-      }));
-    console.log("Ventas de bebidas:", ventasBebidas);
-
-    const ventasComidas = cart
-      .filter(item => item.id_comida) // Filtrar solo comidas
-      .map(item => ({
-        id: item.id_comida,
-        cantidadVendida: item.cantidadSeleccionada // Prepara el objeto para la venta
-      }));
-    console.log("Ventas de comidas:", ventasComidas);
-
-    // Procesa la venta de bebidas
-    BebidaService.venderBebidas(ventasBebidas)
-      .then(() => {
-        console.log("Bebidas vendidas correctamente");
-        return ComidaService.venderComidas(ventasComidas); // Asume que tienes este método en `ComidaService`
-      })
-      .then(() => {
-        console.log("Comidas vendidas correctamente");
-        setCart([]); // Vacía el carrito después de la venta
-        console.log("Carrito vaciado después de la venta");
-        fetchBebidas(); // Refrescar la lista de bebidas después de la venta
-        fetchComidas(); // Refrescar la lista de comidas
-      })
-      .catch(error => {
-        console.error("Error al realizar la venta:", error); // Manejo de errores
-      });
+    Cart.handleSell(cart, setCart, fetchBebidas, fetchComidas); // Pasar setCart aquí
   };
+  
 
   return (
     <div className="d-flex flex-column min-vh-100">
       <Router>
-        <Header cartItems={cart} handleSell={handleSell} /> {/* Pasa el carrito y la función de venta al Header */}
+        <Header cartItems={cart} handleSell={handleSell} />
         <div className='container'>
-          <RoutesComponent 
-            bebidas={bebidas} 
-            comidas={comidas} 
-            boletos={boletos} 
-            addToCartBebida={addToCartBebida} 
-            addToCartComida={addToCartComida} 
-          /> {/* Rutas y componentes */}
+          <RoutesComponent
+            bebidas={bebidas}
+            comidas={comidas}
+            addToCartBebida={(bebida) => Cart.addToCartBebida(bebida, cart, setCart)}
+            addToCartComida={(comida) => Cart.addToCartComida(comida, cart, setCart)}
+          />
         </div>
-        <Footer />
       </Router>
+      <Footer />
     </div>
   );
 }

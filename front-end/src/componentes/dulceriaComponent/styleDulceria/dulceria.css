@@ -1,44 +1,43 @@
-/* Contenedor principal */
-.container {
-  background: linear-gradient(135deg, #f0f4ff, #d0e1ff); /* Degradado suave */
-  border-radius: 10px;
+/* dulceria.css */
+.dulceria-container {
   padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
 }
 
-/* Título */
-h2 {
+.dulceria-container h2 {
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra en el texto */
+  margin-bottom: 30px;
+  color: #343a40; /* Color oscuro */
+}
+
+.dulceria-container .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-custom {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.card-custom h5 {
+  font-size: 1.25rem;
+  margin-bottom: 15px;
+}
+
+.btn-custom {
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 50px; /* Botones redondeados */
+}
+
+.btn-custom:hover {
+  background-color: #0056b3;
+}
+
+.input-group-custom {
+  display: flex;
+  justify-content: center;
   margin-bottom: 20px;
-  font-size: 2rem;
 }
-
-/* Carrusel de Bebidas */
-.carousel {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Botón de venta */
-.btn-primary {
-  background: linear-gradient(45deg, #4a90e2, #007aff); /* Degradado en el botón */
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra en el botón */
-  transition: background 0.3s, transform 0.3s; /* Transiciones suaves */
-}
-
-.btn-primary:hover {
-  background: linear-gradient(45deg, #007aff, #4a90e2); /* Cambio de degradado al hover */
-  transform: translateY(-2px); /* Efecto de flotación al hover */
-}
-
-/* Input de cantidad */
-.form-control {
-  border-radius: 5px;
-  border: 2px solid #007aff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-

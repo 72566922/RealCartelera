@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
+import './styleHeader/modal.css'; // Importar el archivo CSS personalizado
 
 function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
   useEffect(() => {
     if (showModal) {
+      // Limpiar el contenedor antes de renderizar el botón de PayPal
+      const paypalContainer = document.getElementById('paypal-button-container');
+      paypalContainer.innerHTML = "";
+
       window.paypal.Buttons({
         style: {
           color: 'blue',
@@ -35,8 +40,8 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
 
   return (
     showModal && (
-      <div className="modal show" style={{ display: "block" }} onClick={handleModalToggle}>
-        <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+      <div className="modal show" style={{ display: "block" }}>
+        <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">Carrito de Compras</h5>
