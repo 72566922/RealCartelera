@@ -1,13 +1,22 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que el footer esté por encima de otros elementos */
+}
+
 .bg-dark {
-  background-color: #343a40; /* Color de fondo oscuro */
+  background-color: #343a40 !important;
 }
 
 .text-white {
-  color: white !important; /* Asegurarse de que el texto sea blanco */
+  color: #fff !important;
 }
 
-footer {
-  width: 100%;
-  padding: 20px;
-  text-align: center;
+.text-center {
+  text-align: center !important;
+}
+
+.p-2 {
+  padding: 0.5rem !important;
 }

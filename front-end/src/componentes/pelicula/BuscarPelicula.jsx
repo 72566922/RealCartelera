@@ -13,7 +13,6 @@ function BuscarPelicula({ onSearch }) {
 
   return (
     <div className="mb-3">
-      <h3>Escriba su película</h3>
       <div className="input-group">
         <input 
           type="text" 

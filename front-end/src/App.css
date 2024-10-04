@@ -12,4 +12,14 @@
     color: #fff; /* Cambia el color del texto para que contraste con el fondo */
 }
 
+.container{
+    margin-top: 30px;
+}
 /* Otros estilos que necesites */
+
+
+@media (max-width: 768px) {
+    .container{
+        margin-top: 55px;
+    }
+}

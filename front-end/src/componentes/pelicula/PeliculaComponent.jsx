@@ -18,14 +18,17 @@ function PeliculaComponent() {
   };
 
   return (
-    <div className="container">
-      <h3 className="text-center">Aquí irán las películas</h3>
-      <div className="mb-4">
-        <SelectCategoria 
-          onSelect={handleCategoriaSelect} 
-          onCategoryChange={setBusqueda} // Pasar la función para limpiar el input
-        />
-        <BuscarPelicula onSearch={handleSearch} />
+    <div className="container mt-5">
+      <div className="row mb-4">
+        <div className="col-md-6">
+          <SelectCategoria 
+            onSelect={handleCategoriaSelect} 
+            onCategoryChange={setBusqueda} // Pasar la función para limpiar el input
+          />
+        </div>
+        <div className="col-md-6">
+          <BuscarPelicula onSearch={handleSearch} />
+        </div>
       </div>
       <GaleriaPelicula 
         categoria={categoriaSeleccionada === "all" ? "" : categoriaSeleccionada} 

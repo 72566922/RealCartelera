@@ -19,7 +19,7 @@ function CarruselEstrenos() {
 
   const verificarImagenes = useCallback(async (peliculas) => {
     const baseImgUrl = `/imgPelicula/`;
-    const extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+    const extensions = ['.png', '.jpg', '.jpeg', '.gif', '.jfif'];
 
     const imagenPromises = peliculas.map(async (pelicula) => {
       const imageChecks = await Promise.all(

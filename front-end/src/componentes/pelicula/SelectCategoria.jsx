@@ -27,7 +27,6 @@ function SelectCategoria({ onSelect, onCategoryChange }) {
 
   return (
     <div className="mb-3">
-      <h3>Elegir una categoría de Película</h3>
       <select className="form-select" value={selectedCategoria} onChange={handleSelect}>
         <option value="">Selecciona una categoría</option>
         <option value="all">Seleccionar todas</option> {/* Opción para seleccionar todas */}

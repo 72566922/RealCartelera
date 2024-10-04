@@ -10,7 +10,7 @@ function GaleriaPelicula({ categoria, busqueda }) {
   // Función para verificar las imágenes
   const verificarImagenes = useCallback(async (peliculas) => {
     const baseImgUrl = `/imgPelicula/`;
-    const extensions = ['.png', '.jpg', '.jpeg', '.gif'];
+    const extensions = ['.png', '.jpg', '.jpeg', '.gif', '.jfif'];
 
     const imagenPromises = peliculas.map(async (pelicula) => {
       const imageName = pelicula.nombre.toLowerCase().replace(/\s+/g, '-');
@@ -68,8 +68,6 @@ function GaleriaPelicula({ categoria, busqueda }) {
 
   return (
     <div className="galeria-peliculas container my-4">
-      <h2 className="text-center">Películas en Estreno</h2>
-
       <div className="row">
         {imagenes.map((pelicula) => (
           <div className="col-md-4 mb-3" key={pelicula.id_pelicula || pelicula.nombre}>
