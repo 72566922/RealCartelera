@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/boletos';
+const API_URL = 'http://192.168.1.34:8080/api/boletos';
 
 const BoletoService = {
   getAllBoletos: () => {

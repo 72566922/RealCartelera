@@ -6,7 +6,7 @@ function BebidaSelector({ bebidas, setBebidaSeleccionada }) {
 
   useEffect(() => {
     if (bebidas.length > 0) {
-      console.log('Producto actual:', bebidas[currentIndex]);
+      console.log('Bebida seleccionada automaticamente:', bebidas[currentIndex]);
       setBebidaSeleccionada(bebidas[currentIndex]);
     }
   }, [currentIndex, bebidas, setBebidaSeleccionada]);

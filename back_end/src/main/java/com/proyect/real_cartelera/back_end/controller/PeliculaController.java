@@ -1,12 +1,13 @@
 package com.proyect.real_cartelera.back_end.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.proyect.real_cartelera.back_end.model.Pelicula;
-import com.proyect.real_cartelera.back_end.model.Categoria; // Asegúrate de importar Categoria
+import com.proyect.real_cartelera.back_end.model.Categoria; 
 import com.proyect.real_cartelera.back_end.service.PeliculaService;
-import com.proyect.real_cartelera.back_end.service.CategoriaService; // Asegúrate de importar CategoriaService
+import com.proyect.real_cartelera.back_end.service.CategoriaService; 
 
 import java.util.List;
 
@@ -18,13 +19,13 @@ public class PeliculaController {
     private PeliculaService peliculaService;
 
     @Autowired
-    private CategoriaService categoriaService; // Añadir servicio de categoria
+    private CategoriaService categoriaService; 
 
     // Obtener todas las películas o películas por categoría
     @GetMapping
     public List<Pelicula> getPeliculas(@RequestParam(required = false) Long categoriaId) {
         if (categoriaId != null) {
-            Categoria categoria = categoriaService.getCategoriaById(categoriaId); // Suponiendo que tienes este método en tu servicio
+            Categoria categoria = categoriaService.getCategoriaById(categoriaId);
             return peliculaService.getPeliculasPorCategoria(categoria);
         }
         return peliculaService.getAllPeliculas();
@@ -38,8 +39,10 @@ public class PeliculaController {
 
     // Obtener una película por ID
     @GetMapping("/{id}")
-    public Pelicula getPeliculaById(@PathVariable Long id) {
-        return peliculaService.getPeliculaById(id);
+    public ResponseEntity<Pelicula> getPeliculaById(@PathVariable Long id) {
+        return peliculaService.getPeliculaById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Crear una nueva película

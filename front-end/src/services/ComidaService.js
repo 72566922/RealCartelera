@@ -1,7 +1,7 @@
 // src/services/ComidaService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/comidas'; // Cambia esto según tu API
+const API_URL = 'http://192.168.1.34:8080/api/comidas'; // Cambia esto según tu API
 
 const ComidaService = {
   getAllComidas: async () => {

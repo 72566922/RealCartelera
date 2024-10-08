@@ -1,10 +1,12 @@
 package com.proyect.real_cartelera.back_end.repository;
 
 import com.proyect.real_cartelera.back_end.model.Funcion;
+import com.proyect.real_cartelera.back_end.model.Pelicula;
+import com.proyect.real_cartelera.back_end.model.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface FuncionRepository extends JpaRepository<Funcion, Long> {
-    // Puedes agregar consultas personalizadas aquí si las necesitas
+    List<Funcion> findBySala(Sala sala);
+    List<Funcion> findByPelicula(Pelicula pelicula);  // Nuevo método para buscar por película
 }

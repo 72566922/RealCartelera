@@ -86,7 +86,7 @@ public class Sala {
                 ", piso='" + piso + '\'' +
                 ", num_asientos=" + num_asientos +
                 ", estado='" + estado + '\'' +
-                ", sede=" + sede.getDireccion() + // Puedes personalizar este valor según lo que quieras mostrar de la sede
+                ", sede=" + (sede != null ? sede.getDireccion() : "Sin sede") +
                 '}';
     }
 }

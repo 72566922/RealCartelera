@@ -1,7 +1,6 @@
 package com.proyect.real_cartelera.back_end.model;
 
 import jakarta.persistence.*;
-import java.time.LocalTime;
 
 @Entity
 public class Funcion {
@@ -10,24 +9,28 @@ public class Funcion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_funcion;
 
-    private LocalTime hora;
-
-    private double precio; // Nuevo atributo
+    @ManyToOne
+    @JoinColumn(name = "id_sala", referencedColumnName = "id_sala")
+    private Sala sala;
 
     @ManyToOne
     @JoinColumn(name = "id_pelicula", referencedColumnName = "id_pelicula")
     private Pelicula pelicula;
 
+    private String hora;   // Por ejemplo
+    private String fecha;  // Para fecha de la función
+    private String estado; // Estado de la función, por ejemplo, 'disponible', 'agotada', etc.
 
-
-    // Constructor vacío (requerido por JPA)
+    // Constructor vacío
     public Funcion() {}
 
     // Constructor con parámetros
-    public Funcion(LocalTime hora, double precio, Pelicula pelicula) {
+    public Funcion(Sala sala, String hora, Pelicula pelicula, String fecha, String estado) {
+        this.sala = sala;
         this.hora = hora;
-        this.precio = precio; // Inicializa el precio
         this.pelicula = pelicula;
+        this.fecha = fecha;
+        this.estado = estado;
     }
 
     // Getters y Setters
@@ -39,20 +42,20 @@ public class Funcion {
         this.id_funcion = id_funcion;
     }
 
-    public LocalTime getHora() {
+    public Sala getSala() {
+        return sala;
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
+    }
+
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(String hora) {
         this.hora = hora;
-    }
-
-    public double getPrecio() {
-        return precio; // Getter para el precio
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio; // Setter para el precio
     }
 
     public Pelicula getPelicula() {
@@ -63,16 +66,31 @@ public class Funcion {
         this.pelicula = pelicula;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
-    // Método toString para depuración
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
         return "Funcion{" +
                 "id_funcion=" + id_funcion +
-                ", hora=" + hora +
-                ", precio=" + precio + // Incluye el precio en la representación
-                ", pelicula=" + pelicula.getNombre() +
+                ", sala=" + (sala != null ? sala.getNombre() : "Sin sala") +
+                ", pelicula='" + pelicula + '\'' +
+                ", hora='" + hora + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", estado='" + estado + '\'' +
                 '}';
     }
 }

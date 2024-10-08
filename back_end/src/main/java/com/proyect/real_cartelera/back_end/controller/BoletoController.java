@@ -34,7 +34,12 @@ public class BoletoController {
     // Crear un nuevo boleto
     @PostMapping
     public ResponseEntity<Boleto> createBoleto(@RequestBody Boleto boleto) {
-        Boleto newBoleto = boletoService.createBoleto(boleto.getFuncion(), boleto.getAsiento());
+        // Asegúrate de que el cliente no sea nulo
+        if (boleto.getCliente() == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        
+        Boleto newBoleto = boletoService.createBoleto(boleto.getFuncion(), boleto.getAsiento(), boleto.getCliente());
         return new ResponseEntity<>(newBoleto, HttpStatus.CREATED);
     }
 

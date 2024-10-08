@@ -1,11 +1,12 @@
+// PeliculaItem.js
 import React from "react";
-import { Link } from 'react-router-dom'; // Importar Link
+import { Link } from 'react-router-dom';
 import './style.css';
 
 function PeliculaItem({ pelicula }) {
   return (
     <div className="pelicula-item card">
-      <Link to={`/comprarBoleto/${pelicula.id_pelicula}`}> {/* Enlazar a la ruta /comprarBoleto con el id de la película */}
+      <Link to={`/comprarBoleto/${pelicula.id_pelicula}`} aria-label={`Comprar boleto para ${pelicula.titulo}`}>
         <img src={pelicula.imagenUrl} alt={pelicula.nombre} className="pelicula-img card-img-top" />
       </Link>
       <div className="card-body">

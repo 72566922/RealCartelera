@@ -45,7 +45,7 @@ public class SalaService {
             sala.setEstado(salaDetails.getEstado());
             sala.setSede(salaDetails.getSede());
             return salaRepository.save(sala);
-        }).orElseThrow(() -> new RuntimeException("Sala no encontrada con ID: " + id));
+        }).orElseThrow(); // Usa la excepción personalizada
     }
 
     // Actualizar el estado de una sala
@@ -53,11 +53,18 @@ public class SalaService {
         return salaRepository.findById(id).map(sala -> {
             sala.setEstado(nuevoEstado);
             return salaRepository.save(sala);
-        }).orElseThrow(() -> new RuntimeException("Sala no encontrada con ID: " + id));
+        }).orElseThrow(); // Usa la excepción personalizada
     }
 
     // Eliminar una sala
     public void deleteSala(Long id) {
         salaRepository.deleteById(id);
+    }
+
+    // Obtener el número de asientos de una sala por ID
+    public int getNumAsientosBySalaId(Long id) {
+        return salaRepository.findById(id)
+                .map(Sala::getNum_asientos)
+                .orElseThrow(); // Aquí puedes usar una excepción personalizada si la sala no es encontrada
     }
 }

@@ -1,34 +1,20 @@
-/* src/styles.css */
+/* src/stylesComprarboleto.css */
 
-/* Estilos personalizados */
-.galeria-peliculas {
-    margin: 20px 0;
+/* Estilos específicos para el video */
+.video-container {
+    margin-top: 20px; /* Espaciado superior */
+    border: 1px solid #ddd; /* Borde alrededor del contenedor del video */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 15px; /* Espaciado interno */
+    background-color: #f9f9f9; /* Color de fondo claro */
 }
 
-.galeria-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+.video-container h3 {
+    color: #333; /* Color del título */
 }
 
-.pelicula-item {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: center;
-    overflow: hidden; /* Asegura que el contenido no se desborde */
-    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
-}
-
-.pelicula-img {
-    width: 100%;
-    height: 100%; /* Establecer una altura fija para todas las imágenes */
-    object-fit: cover; /* Asegura que la imagen se recorte y mantenga la proporción */
-    border-radius: 5px;
-    transition: transform 0.3s ease; /* Transición suave para el efecto hover */
-}
-
-/* Efecto hover */
-.pelicula-item:hover .pelicula-img {
-    transform: scale(1.1); /* Aumentar el tamaño de la imagen al 110% */
+.video-container video {
+    width: 100%; /* Ancho del video */
+    max-height: 500px; /* Altura máxima del video */
+    border-radius: 5px; /* Bordes redondeados para el video */
 }

@@ -17,14 +17,19 @@ public class Boleto {
     @JoinColumn(name = "id_asiento", referencedColumnName = "id_asiento")
     private Asiento asiento;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    private Cliente cliente;
+
     // Constructor por defecto
     public Boleto() {
     }
 
     // Constructor con parámetros
-    public Boleto(Funcion funcion, Asiento asiento) {
+    public Boleto(Funcion funcion, Asiento asiento, Cliente cliente) {
         this.funcion = funcion;
         this.asiento = asiento;
+        this.cliente = cliente;
     }
 
     // Getters y Setters
@@ -50,5 +55,13 @@ public class Boleto {
 
     public void setAsiento(Asiento asiento) {
         this.asiento = asiento;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

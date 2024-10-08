@@ -1,7 +1,7 @@
 // src/services/BebidaService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/bebidas';
+const API_URL = 'http://192.168.1.34:8080/api/bebidas';
 
 const BebidaService = {
   getAllBebidas: () => {

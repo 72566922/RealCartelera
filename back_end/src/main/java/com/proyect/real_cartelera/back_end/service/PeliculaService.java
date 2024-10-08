@@ -27,9 +27,8 @@ public class PeliculaService {
     }
 
     // Obtener una película por ID
-    public Pelicula getPeliculaById(Long id) {
-        Optional<Pelicula> pelicula = peliculaRepository.findById(id);
-        return pelicula.orElse(null);
+    public Optional<Pelicula> getPeliculaById(Long id) {
+        return peliculaRepository.findById(id); // Retorna Optional<Pelicula>
     }
 
     // Crear una nueva película
@@ -40,10 +39,10 @@ public class PeliculaService {
     public List<Pelicula> getPeliculasPorCategoria(Categoria categoria) { // Cambiado a Categoria
         return peliculaRepository.findByCategoria(categoria); // Suponiendo que tienes este método en tu repositorio
     }
-    
+
     // Actualizar el estado de una película
     public Pelicula updatePeliculaEstado(Long id, String nuevoEstado) {
-        Pelicula pelicula = getPeliculaById(id);
+        Pelicula pelicula = getPeliculaById(id).orElse(null);
         if (pelicula != null) {
             pelicula.setEstado(nuevoEstado);
             return peliculaRepository.save(pelicula);
@@ -53,7 +52,7 @@ public class PeliculaService {
 
     // Actualizar una película existente
     public Pelicula updatePelicula(Long id, Pelicula peliculaDetails) {
-        Pelicula pelicula = getPeliculaById(id);
+        Pelicula pelicula = getPeliculaById(id).orElse(null);
         if (pelicula != null) {
             pelicula.setNombre(peliculaDetails.getNombre());
             pelicula.setDescripcion(peliculaDetails.getDescripcion());

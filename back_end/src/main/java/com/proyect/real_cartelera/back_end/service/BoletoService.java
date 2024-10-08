@@ -4,6 +4,7 @@ import com.proyect.real_cartelera.back_end.dto.BoletoDTO;
 import com.proyect.real_cartelera.back_end.model.Boleto;
 import com.proyect.real_cartelera.back_end.model.Funcion;
 import com.proyect.real_cartelera.back_end.model.Asiento;
+import com.proyect.real_cartelera.back_end.model.Cliente;
 import com.proyect.real_cartelera.back_end.repository.BoletoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,11 +33,10 @@ public class BoletoService {
     }
 
     // Crear un nuevo boleto
-    public Boleto createBoleto(Funcion funcion, Asiento asiento) {
-        Boleto boleto = new Boleto(funcion, asiento);
+    public Boleto createBoleto(Funcion funcion, Asiento asiento, Cliente cliente) {
+        Boleto boleto = new Boleto(funcion, asiento, cliente);
         return boletoRepository.save(boleto);
     }
-    
 
     // Actualizar un boleto existente
     public Boleto updateBoleto(Long id, Funcion funcion, Asiento asiento) {

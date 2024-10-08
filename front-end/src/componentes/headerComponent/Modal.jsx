@@ -4,6 +4,9 @@ import './styleHeader/modal.css'; // Importar el archivo CSS personalizado
 function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
   useEffect(() => {
     if (showModal) {
+      // Imprimir los artículos del carrito en la consola
+      console.log("Artículos en el carrito:", cartItems);
+
       // Limpiar el contenedor antes de renderizar el botón de PayPal
       const paypalContainer = document.getElementById('paypal-button-container');
       paypalContainer.innerHTML = "";
@@ -16,6 +19,10 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
         },
         createOrder: function (data, actions) {
           const totalAmount = cartItems.reduce((total, item) => total + item.precioTotal, 0);
+
+          // Imprimir el monto total en la consola
+          console.log("Total a pagar:", totalAmount.toFixed(2));
+
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -26,12 +33,16 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
         },
         onApprove: function (data, actions) {
           return actions.order.capture().then(function (details) {
+            // Imprimir detalles del pago completado
             console.log('Pago completado con éxito por ' + details.payer.name.given_name);
+            console.log("Detalles de la transacción:", details);
+
             handleSell(); // Llamar a handleSell para completar la venta
             handleModalToggle(); // Cerrar el modal
           });
         },
         onError: function (err) {
+          // Imprimir error si el pago falla
           console.error('Error en el pago: ', err);
         }
       }).render('#paypal-button-container');

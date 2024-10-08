@@ -53,10 +53,12 @@
 
 .carousel-control-prev {
   left: 10px; /* Posición del botón anterior */
+  background-color: rgb(132, 197, 197);
 }
 
 .carousel-control-next {
   right: 10px; /* Posición del botón siguiente */
+  background-color: rgb(132, 197, 197);
 }
 
 .carousel-indicators {
