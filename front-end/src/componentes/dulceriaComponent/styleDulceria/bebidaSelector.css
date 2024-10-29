@@ -1,0 +1,100 @@
+/* styleDulceria/bebidaSelector.css */
+.carousel {
+  margin: 0;
+  position: relative;
+  overflow: hidden; /* Evita que se desborde el contenido */
+  border-radius: 10px; /* Bordes redondeados para el carrusel */
+  background-color: rgb(255, 255, 255);
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease; /* Animación suave al cambiar */
+}
+
+.carousel-item {
+  flex: 0 0 100%; /* Cada item ocupa el 100% del carrusel */
+  text-align: center; /* Centra el contenido del carrusel */
+}
+
+.image-container {
+  width: 100%; /* Ajusta el ancho al 100% del contenedor */
+  height: 300px; /* Altura fija para el contenedor de la imagen */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde */
+  display: flex; /* Flexbox para centrar la imagen */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+}
+
+.carousel-item img {
+  width: auto; /* Mantiene la relación de aspecto de la imagen */
+  height: 100%; /* Asegura que la imagen ocupe todo el alto del contenedor */
+  object-fit: cover; /* Mantiene la relación de aspecto de la imagen y la cubre */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para el texto */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute; /* Cambiado a 'absolute' para estar en relación al contenedor padre */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none; /* Sin fondo */
+  border: none; /* Sin borde */
+  color: black; /* Color negro para los íconos */
+  font-size: 60px; /* Tamaño de los íconos */
+  cursor: pointer;
+  z-index: 10; /* Asegura que los botones estén por encima del contenido */
+}
+
+.carousel-control-prev {
+  left: 10px; /* Posición del botón anterior */
+  background-color: rgb(132, 197, 197);
+}
+
+.carousel-control-next {
+  right: 10px; /* Posición del botón siguiente */
+  background-color: rgb(132, 197, 197);
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Espacio entre el carrusel y los puntos */
+}
+
+.carousel-indicator {
+  width: 10px; /* Ancho de los puntos */
+  height: 10px; /* Altura de los puntos */
+  border-radius: 50%; /* Hacer los puntos redondos */
+  margin: 0 5px; /* Espaciado entre los puntos */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  transition: background-color 0.3s; /* Transición suave al cambiar de color */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    font-size: 20px; /* Tamaño más pequeño para pantallas pequeñas */
+  }
+  
+  .carousel-caption {
+    font-size: 0.8rem; /* Tamaño de fuente más pequeño */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    font-size: 18px; /* Tamaño aún más pequeño para pantallas muy pequeñas */
+  }
+
+  .carousel-caption {
+    font-size: 0.7rem; /* Tamaño de fuente aún más pequeño */
+  }
+}

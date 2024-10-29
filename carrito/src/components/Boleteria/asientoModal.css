@@ -1,0 +1,4 @@
+.asiento-bloqueado {
+    text-decoration: line-through;
+    color: red;
+}
