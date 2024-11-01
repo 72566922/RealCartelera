@@ -34,6 +34,20 @@ public class FuncionController {
         return funcionService.getFuncionesPorPelicula(pelicula);
     }
 
+    // Obtener todas las películas de las funciones
+    @GetMapping("/peliculas")
+    public ResponseEntity<List<Pelicula>> getAllPeliculasFromFunciones() {
+        List<Funcion> funciones = funcionService.getAllFunciones();
+
+        // Extraer las películas de cada función y eliminar duplicados
+        List<Pelicula> peliculas = funciones.stream()
+                .map(Funcion::getPelicula) // Obtiene la película de cada función
+                .distinct() // Elimina duplicados
+                .toList();
+
+        return ResponseEntity.ok(peliculas);
+    }
+
     // Obtener todas las funciones
     @GetMapping
     public List<Funcion> getAllFunciones() {

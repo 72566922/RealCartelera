@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ModalCarrito from "../ModalCarrito";
+import { useAuth } from '../usuario/AuthContext'; // Asegúrate de que la ruta sea correcta
+import "./style.css";
 
 function Header() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [usuarioId, setUsuarioId] = useState(null);
-    const [usuarioGmail, setUsuarioGmail] = useState(null);
-
-    useEffect(() => {
-        const storedUsuarioId = localStorage.getItem('usuarioId');
-        const storedUsuarioGmail = localStorage.getItem('usuarioGmail');
-        
-        if (storedUsuarioId && storedUsuarioGmail) {
-            setUsuarioId(storedUsuarioId);
-            setUsuarioGmail(storedUsuarioGmail);
-        }
-    }, []);
+    const { usuarioId, usuarioGmail, logout } = useAuth(); // Obtener estado y función de logout del contexto
 
     const abrirModal = () => {
         setIsModalOpen(true);
@@ -26,37 +17,46 @@ function Header() {
     };
 
     const cerrarSesion = () => {
-        localStorage.removeItem('usuarioId');
-        localStorage.removeItem('usuarioGmail');
-        setUsuarioId(null);
-        setUsuarioGmail(null);
-        window.location.reload(); // Recarga la página para actualizar el estado de sesión
+        logout(); // Utilizar la función logout del contexto
     };
 
     return (
-        <div>
-            <header>
-                <nav>
-                    <ul>
-                        <li><Link to={"/"}>INICIO</Link></li>
-                        <li><Link to={"/pelicula"}>PELICULA</Link></li>
-                        <li><Link to={"/dulceria"}>DULCERIA</Link></li>
-                        <li><Link to={"/register"}>LOGIN</Link></li>
-                        <li><button onClick={abrirModal}>Ver Carrito</button></li>
+        <header className="text-dark p-3">
+            <nav className="navbar navbar-expand-lg navbar-dark container-fluid">
+                <Link className="navbar-brand" to="/">INICIO</Link>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/pelicula">PELICULA</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/dulceria">DULCERIA</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/register">LOGIN</Link>
+                        </li>
                     </ul>
-                </nav>
+                    <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <button className="btn btn-outline-light me-3" onClick={abrirModal}>Ver Carrito</button>
+                        </li>
+                        {usuarioGmail && usuarioId && (
+                            <li className="nav-item text-end">
+                                <div className="text-light">
+                                    <p className="mb-1">User: {usuarioGmail}</p>
+                                    <button className="btn btn-danger btn-sm" onClick={cerrarSesion}>Cerrar sesión</button>
+                                </div>
+                            </li>
+                        )}
+                    </ul>
+                </div>
+            </nav>
 
-                {usuarioGmail && usuarioId && (
-                    <div>
-                        <p>Usuario: {usuarioGmail}</p>
-                        <p>ID: {usuarioId}</p>
-                        <button onClick={cerrarSesion}>Cerrar sesión</button> {/* Botón de cerrar sesión */}
-                    </div>
-                )}
-
-                <ModalCarrito isOpen={isModalOpen} onClose={cerrarModal} />
-            </header>
-        </div>
+            <ModalCarrito isOpen={isModalOpen} onClose={cerrarModal} />
+        </header>
     );
 }
 

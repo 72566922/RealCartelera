@@ -28,41 +28,7 @@ export const CarritoProvider = ({ children }) => {
             }
         });
     };
-    
 
-    // Función para agregar boletos al carrito
-    const agregarAlCarritoBoletos = (nuevoBoleto, cantidad = 1) => {
-        console.log('Intentando agregar boleto:', nuevoBoleto);
-    
-        const existeBoleto = carritoBoletos.some(boleto =>
-            boleto.id_asiento === nuevoBoleto.id_asiento &&
-            boleto.id_funcion === nuevoBoleto.id_funcion &&
-            boleto.estado === nuevoBoleto.estado // Comparar por estado o algún atributo que diferencie
-        );
-    
-        if (existeBoleto) {
-            console.log(`El boleto ID: ${nuevoBoleto.id_asiento} para la función ID: ${nuevoBoleto.id_funcion} con estado ${nuevoBoleto.estado} ya existe en el carrito.`);
-            alert(`El boleto ID: ${nuevoBoleto.id_asiento} para la función ID: ${nuevoBoleto.id_funcion} con estado ${nuevoBoleto.estado} ya está en el carrito.`);
-            return; // No se agrega si ya hay un boleto igual
-        }
-    
-        // Obtener el precio de la función correspondiente
-        const funcion = carritoFunciones.find(func => func.id === nuevoBoleto.id_funcion);
-        const precio = funcion ? funcion.precio : nuevoBoleto.precio || 0; // Usar un valor predeterminado si el precio no está definido
-
-    
-        // Agregar el nuevo boleto con el precio y cantidad
-        const boletoConPrecio = { 
-            ...nuevoBoleto, 
-            precio,
-            cantidad
-        }; 
-        console.log('Boleto agregado al carrito:', boletoConPrecio);
-        setCarritoBoletos((prevBoletos) => [...prevBoletos, boletoConPrecio]); // Agregar nuevo boleto
-    };
-    
-
-    // Función para agregar funciones (películas) al carrito
     const agregarAlCarritoFunciones = (item, id_asiento) => {
         console.log('Intentando agregar a funciones:', item);
 
@@ -73,7 +39,7 @@ export const CarritoProvider = ({ children }) => {
         if (existeBoleto) {
             console.log(`Error: el boleto para el asiento ID ${id_asiento} ya está reservado para esta función.`);
             alert(`No se puede agregar la función, el asiento ID ${id_asiento} ya está reservado para esta función.`);
-            return; // No se agrega si ya existe
+            return;
         }
 
         setCarritoFunciones((prevCarrito) => {
@@ -81,13 +47,55 @@ export const CarritoProvider = ({ children }) => {
 
             if (existe) {
                 console.log('Error: la función ya está en el carrito.');
-                return prevCarrito; // No se agrega si ya existe
+                return prevCarrito;
             } else {
                 const nuevoItem = { ...item, cantidad: 1, precioTotal: item.precio };
                 console.log('Función agregada al carrito:', nuevoItem);
                 return [...prevCarrito, nuevoItem];
             }
         });
+    };
+
+    // Función para agregar boletos al carrito
+    // Función para agregar boletos al carrito
+    const agregarAlCarritoBoletos = (nuevoBoleto, cantidad = 1) => {
+        console.log('Intentando agregar boleto:', nuevoBoleto);
+
+        const existeBoleto = carritoBoletos.some(boleto =>
+            boleto.id_asiento === nuevoBoleto.id_asiento &&
+            boleto.id_funcion === nuevoBoleto.id_funcion &&
+            boleto.estado === nuevoBoleto.estado
+        );
+
+        if (existeBoleto) {
+            console.log(`El boleto ID: ${nuevoBoleto.id_asiento} para la función ID: ${nuevoBoleto.id_funcion} ya existe en el carrito.`);
+            alert(`El boleto ID: ${nuevoBoleto.id_asiento} para la función ID: ${nuevoBoleto.id_funcion} ya está en el carrito.`);
+            return;
+        }
+
+        // Obtener el precio de la función relacionada
+        const funcion = carritoFunciones.find(func => func.id === nuevoBoleto.id_funcion);
+        const precio = funcion ? funcion.precio : nuevoBoleto.precio || 0; // Asegúrate de que el precio provenga de la función
+
+        // Crear el objeto del boleto con su precio, cantidad y calcular el precio total
+        const boletoConPrecio = {
+            ...nuevoBoleto,
+            precio, // Aquí asignamos el precio de la función
+            cantidad,
+            precioTotal: precio * cantidad // Calcula el precio total del boleto
+        };
+
+        console.log('Boleto agregado al carrito:', boletoConPrecio);
+        setCarritoBoletos(prevBoletos => [...prevBoletos, boletoConPrecio]);
+    };
+
+
+    // Función para limpiar todos los carritos
+    const limpiarCarrito = () => {
+        setCarritoDulceria([]);
+        setCarritoFunciones([]);
+        setCarritoBoletos([]);
+        console.log('Todos los carritos han sido vaciados');
     };
 
     // Funciones para eliminar productos del carrito
@@ -105,18 +113,33 @@ export const CarritoProvider = ({ children }) => {
         setCarritoFunciones((prevCarrito) => {
             const nuevoCarrito = prevCarrito.filter(funcion => funcion.id !== id);
             console.log('Carrito de funciones actualizado:', nuevoCarrito);
+
+            // Eliminar todos los boletos relacionados a la función eliminada
+            eliminarDelCarritoBoletosPorFuncion(id); // Llamar a la nueva función para eliminar boletos
+
             return nuevoCarrito;
         });
     };
 
+    // Nueva función para eliminar boletos asociados a una función
+    const eliminarDelCarritoBoletosPorFuncion = (id_funcion) => {
+        setCarritoBoletos(prevBoletos => {
+            const nuevosBoletos = prevBoletos.filter(boleto => boleto.id_funcion !== id_funcion);
+            console.log(`Boletos eliminados para la función ID: ${id_funcion}`, nuevosBoletos);
+            return nuevosBoletos;
+        });
+    };
+
     const eliminarDelCarritoBoletos = (id_asiento, id_funcion) => {
-        console.log('Eliminando boleto del carrito:', { id_asiento, id_funcion });
-        setCarritoBoletos((prevCarrito) => {
-            const nuevoCarrito = prevCarrito.filter(boleto =>
-                !(boleto.id_asiento === id_asiento && boleto.id_funcion === id_funcion)
-            );
-            console.log('Carrito de boletos actualizado:', nuevoCarrito);
-            return nuevoCarrito;
+        setCarritoBoletos(prevBoletos => {
+            const nuevosBoletos = prevBoletos.filter(boleto => !(boleto.id_asiento === id_asiento && boleto.id_funcion === id_funcion));
+
+            const hayBoletosRestantes = nuevosBoletos.some(boleto => boleto.id_funcion === id_funcion);
+            if (!hayBoletosRestantes) {
+                eliminarDelCarritoFunciones(id_funcion);
+            }
+
+            return nuevosBoletos;
         });
     };
 
@@ -126,6 +149,7 @@ export const CarritoProvider = ({ children }) => {
             carritoDulceria,
             carritoFunciones,
             carritoBoletos,
+            limpiarCarrito,
             agregarAlCarritoDulceria,
             agregarAlCarritoFunciones,
             agregarAlCarritoBoletos,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import Filtrar from "./Filtrar";
+import BuscarNombre from "./BuscarNombre";
 import FuncionService from "../../service/FuncionService";
 
 const imageExists = async (url) => {
@@ -18,6 +19,7 @@ function Peliculas() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+    const [nombreBuscado, setNombreBuscado] = useState('');
     const [imagenes, setImagenes] = useState([]);
     const defaultImageUrl = '/path/to/default/image.png'; // Cambia esta ruta a tu imagen por defecto
 
@@ -44,7 +46,6 @@ function Peliculas() {
             const imageName = pelicula.nombre.toLowerCase().replace(/\s+/g, '-');
             let validImageUrl = defaultImageUrl;
 
-            // Verifica cada extensión de imagen
             for (const ext of extensions) {
                 const exists = await imageExists(`${baseImgUrl}${imageName}${ext}`);
                 if (exists) {
@@ -73,6 +74,14 @@ function Peliculas() {
         ).map(id => funcionesFiltradas.find(funcion => funcion.pelicula.id_pelicula === id));
     }, [funcionesFiltradas]);
 
+    const peliculasFiltradasPorNombre = useMemo(() => {
+        const nombreNormalizado = nombreBuscado.toLowerCase().replace(/[\s-]/g, ""); // Quita espacios y guiones
+        return peliculasUnicas.filter((funcion) => {
+            const nombrePeliculaNormalizado = funcion.pelicula.nombre.toLowerCase().replace(/[\s-]/g, "");
+            return nombrePeliculaNormalizado.includes(nombreNormalizado);
+        });
+    }, [peliculasUnicas, nombreBuscado]);
+
     useEffect(() => {
         if (funciones.length > 0) {
             verificarImagenes(funciones.map(funcion => funcion.pelicula));
@@ -83,30 +92,38 @@ function Peliculas() {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
-            <h3>Películas según las funciones</h3>
+        <div className="container ">
+            <h3 className="text-center">Películas según las funciones</h3>
             <Filtrar setCategoriaSeleccionada={setCategoriaSeleccionada} />
-            {peliculasUnicas.length > 0 ? (
-                <ul>
-                    {peliculasUnicas.map((funcion) => {
+            <BuscarNombre onSearch={setNombreBuscado} /> {/* Mantén el botón de búsqueda */}
+
+            {peliculasFiltradasPorNombre.length > 0 ? (
+                <div className="row">
+                    {peliculasFiltradasPorNombre.map((funcion) => {
                         const peliculaConImagen = imagenes.find(img => img.nombre === funcion.pelicula.nombre);
                         return (
-                            <li key={funcion.id}>
-                                <Link to={"/boleteria"} state={{ pelicula: funcion.pelicula }}>
-                                    <img
-                                        src={peliculaConImagen ? peliculaConImagen.imagenUrl : defaultImageUrl}
-                                        alt={peliculaConImagen ? funcion.pelicula.nombre : "Imagen no disponible"}
-                                        style={{ width: '100px', height: '150px', cursor: 'pointer' }}
-                                        onClick={() => navigate('/boleteria', { state: { pelicula: funcion.pelicula } })} // Cambiado aquí
-                                    />
-                                    <div>
-                                        {funcion.pelicula.id_pelicula} - {funcion.pelicula.nombre} - {funcion.pelicula.categoria.nombre} - {funcion.sala.nombre}
-                                    </div>
-                                </Link>
-                            </li>
+                            <div className="col-md-3 mb-3" key={`${funcion.id}-${funcion.pelicula.id_pelicula}`}>
+                                <div className="card">
+                                    <Link to={"/boleteria"} state={{ pelicula: funcion.pelicula }}>
+                                        <img
+                                            src={peliculaConImagen ? peliculaConImagen.imagenUrl : defaultImageUrl}
+                                            alt={peliculaConImagen ? funcion.pelicula.nombre : "Imagen no disponible"}
+                                            className="card-img-top"
+                                            style={{ cursor: 'pointer', height: 'auto' }}
+                                            onClick={() => navigate('/boleteria', { state: { pelicula: funcion.pelicula } })}
+                                        />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{funcion.pelicula.nombre}</h5>
+                                            <p className="card-text">
+                                                {funcion.pelicula.categoria.nombre} - {funcion.sala.nombre}
+                                            </p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
                         );
                     })}
-                </ul>
+                </div>
             ) : (
                 <p>No hay funciones disponibles.</p>
             )}

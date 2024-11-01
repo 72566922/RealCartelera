@@ -1,57 +1,63 @@
-// Dulceria.js
-import React, { useState } from 'react';
+import React from 'react';
 import useBebidas from '../hooks/useBebidas';
 import useComidas from '../hooks/useComidas';
-import ModalCarrito from '../ModalCarrito'; // Asegúrate de importar correctamente el modal
-import Producto from './Producto'; // Importar el componente Producto
+import Carrusel from './Carrusel'; // Importa el componente Carrusel
+import './dulceria.css'; // Importa el archivo CSS
 
 const Dulceria = () => {
     const { bebidas, loading: loadingBebidas } = useBebidas();
     const { comidas, loading: loadingComidas } = useComidas();
 
-    // Estado para controlar el modal
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
+    // Manejo de estado de carga y disponibilidad
     if (loadingBebidas || loadingComidas) return <p>Cargando...</p>;
+    if (!bebidas.length) return <p>No hay bebidas disponibles.</p>;
+    if (!comidas.length) return <p>No hay comidas disponibles.</p>;
+
+    // Mapeamos las bebidas a un formato que el Carrusel pueda entender
+    const bebidasItems = bebidas.map(bebida => ({
+        id: bebida.dulce.id_dulce,
+        id_bebida: bebida.id_bebida,
+        nombre: bebida.dulce.nombre,
+        cantidad: bebida.unidades,
+        precio: bebida.precio,
+        litros: bebida.litros,
+        imagenUrl: bebida.imagenUrl,
+        agregarAlCarrito: bebida.agregarAlCarrito 
+    }));
+
+    // Mapeamos las comidas a un formato que el Carrusel pueda entender
+    const comidasItems = comidas.map(comida => ({
+        id: comida.dulce.id_dulce,
+        id_comida: comida.id_comida,
+        nombre: comida.dulce.nombre,
+        cantidad: comida.unidades, 
+        precio: comida.precio,
+        gramos: comida.gramos,
+        imagenUrl: comida.imagenUrl,
+        agregarAlCarrito: comida.agregarAlCarrito 
+    }));
 
     return (
-        <div>
-            <h2>Dulcería</h2>
+        <div className="container">
+            <h2 className="text-center">Dulcería</h2>
 
-            <h3>Bebidas ({bebidas.length})</h3>
-            <ul>
-                {bebidas.map(bebida => (
-                    <li key={bebida.id_bebida}>
-                        {/* Pasamos el objeto 'bebida' al componente Producto */}
-                        <Producto item={{ 
-                            idDulce: bebida.dulce.id_dulce, 
-                            nombre: bebida.dulce.nombre, 
-                            precio: bebida.precio,
-                            litros: bebida.litros,
-                            id: bebida.id_bebida
-                        }} />
-                    </li>
-                ))}
-            </ul>
+            <div className="row d-flex justify-content-center"> {/* Usar 'justify-content-center' para centrar columnas */}
+                <div className="col-md-5 col-sm-12 mb-4"> {/* Contenedor para Bebidas */}
+                    <h3>Bebidas ({bebidas.length})</h3>
+                    <div className="carrusel-container">
+                        {/* Usamos el Carrusel para las bebidas */}
+                        <Carrusel items={bebidasItems} title="Bebidas" />
+                    </div>
+                </div>
 
-            <h3>Comidas ({comidas.length})</h3>
-            <ul>
-                {comidas.map(comida => (
-                    <li key={comida.id_comida}>
-                        {/* Pasamos el objeto 'comida' al componente Producto */}
-                        <Producto item={{ 
-                            id: comida.id_comida, 
-                            nombre: comida.dulce.nombre, 
-                            precio: comida.precio,
-                            gramos: comida.gramos 
-                        }} />
-                    </li>
-                ))}
-            </ul>
-
-            {/* Modal para mostrar el carrito */}
-            <button onClick={() => setIsModalOpen(true)}>Ver Carrito</button>
-            <ModalCarrito isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <div className="col-md-5 col-sm-12 mb-4"> {/* Contenedor para Comidas */}
+                    <h3>Comidas ({comidas.length})</h3>
+                    <div className="carrusel-container">
+                        {/* Usamos el Carrusel para las comidas */}
+                        <Carrusel items={comidasItems} title="Comidas" />
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

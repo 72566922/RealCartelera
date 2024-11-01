@@ -96,12 +96,15 @@ const AsientoModal = ({ onClose, idSala, nombreSala, sede, pelicula, idFuncion, 
     
             uniqueBoletos.forEach(boleto => {
                 agregarAlCarritoBoletos(boleto);
+                // Imprimir los datos del boleto en la consola
+                console.log('Boleto agregado con exito al carrito:', boleto);
             });
         } else {
             console.warn('No hay asientos seleccionados');
         }
         onClose();
     };
+    
     
     
     const handleClose = () => {

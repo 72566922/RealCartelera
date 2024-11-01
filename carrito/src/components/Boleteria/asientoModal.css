@@ -1,4 +1,53 @@
-.asiento-bloqueado {
-    text-decoration: line-through;
-    color: red;
+/* asientoModal.css */
+.asiento {
+    width: 30px; /* Aumentar el ancho del asiento */
+    height: 30px; /* Aumentar el alto del asiento */
+    border-radius: 50%; /* Forma circular */
+    background-color: #28a745; /* Color de asiento disponible */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0; /* Espacio entre asientos */
+    color: white; /* Color del texto */
+    font-size: 0.8rem; /* Ajustar tamaño de la fuente si es necesario */
 }
+
+.asiento-bloqueado {
+    background-color: red; /* Color para asientos bloqueados */
+    color: white; /* Color del texto en asientos bloqueados */
+    text-decoration: line-through; /* Texto tachado */
+    cursor: not-allowed; /* Cambia el cursor cuando el asiento está bloqueado */
+}
+
+.asiento-seleccionado {
+    background-color: #007bff; /* Color para asientos seleccionados */
+    transform: scale(1.1); /* Efecto de aumento al seleccionar */
+}
+
+.asiento-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 columnas */
+    grid-template-rows: repeat(7, 1fr); /* 7 filas */
+    gap: 5px; /* Espacio entre los asientos */
+}
+
+.modal-dialog {
+    max-width: 900px; /* Ancho máximo del modal */
+    width: 100%; /* Permitir que el modal use el ancho completo */
+}
+
+.modal-body {
+    max-height: 70vh; /* Limitar la altura del modal para que no ocupe toda la pantalla */
+    overflow-y: auto; /* Habilitar desplazamiento si el contenido es demasiado grande */
+}
+
+@media (max-width: 576px) {
+    .asiento-grid {
+        grid-template-columns: repeat(7, 1fr); /* 10 columnas */
+        grid-template-rows: repeat(10, 1fr); /* 7 filas */
+        gap: 5px; /* Espacio entre los asientos */
+    }
+  
+  }

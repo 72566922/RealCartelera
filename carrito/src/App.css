@@ -1,0 +1,11 @@
+.container{
+    margin-top: 120px;
+    background-color: rgb(168, 65, 134);
+}
+
+@media (max-width: 576px) {
+    .container{
+        margin-top: 80px;
+    }
+  
+  }

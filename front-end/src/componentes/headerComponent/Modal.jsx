@@ -4,7 +4,6 @@ import './styleHeader/modal.css'; // Importar el archivo CSS personalizado
 function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
   useEffect(() => {
     if (showModal) {
-      // Imprimir los artículos del carrito en la consola
       console.log("Artículos en el carrito:", cartItems);
 
       // Limpiar el contenedor antes de renderizar el botón de PayPal
@@ -20,21 +19,9 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
         createOrder: function (data, actions) {
           const totalAmount = cartItems.reduce((total, item) => total + item.precioTotal, 0);
 
-          // Imprimir el monto total en la consola
+          // Imprimir el monto total y detalles de los datos a vender en la consola
           console.log("Total a pagar:", totalAmount.toFixed(2));
-
-          // Crear un objeto con detalles de la orden para enviar al backend
-          const orderDetails = {
-            items: cartItems.map(item => ({
-              nombre: item.dulce?.nombre,
-              cantidad: item.cantidadSeleccionada,
-              precioTotal: item.precioTotal,
-            })),
-            totalAmount: totalAmount.toFixed(2),
-          };
-
-          // Imprimir detalles de la orden
-          console.log("Detalles de la orden:", orderDetails);
+          console.log("Detalles de la orden (antes de crear):", cartItems);
 
           return actions.order.create({
             purchase_units: [{
@@ -46,16 +33,14 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
         },
         onApprove: function (data, actions) {
           return actions.order.capture().then(function (details) {
-            // Imprimir detalles del pago completado
             console.log('Pago completado con éxito por ' + details.payer.name.given_name);
             console.log("Detalles de la transacción:", details);
 
-            handleSell(); // Llamar a handleSell para completar la venta
+            handleSell(); // Completar la venta
             handleModalToggle(); // Cerrar el modal
           });
         },
         onError: function (err) {
-          // Imprimir error si el pago falla
           console.error('Error en el pago: ', err);
         }
       }).render('#paypal-button-container');

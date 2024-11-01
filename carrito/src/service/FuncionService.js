@@ -23,6 +23,10 @@ const FuncionService = {
         });
     },
 
+    getPeliculasFromFunciones: () => {
+        return axios.get(`${API_URL}/peliculas`);
+    },
+
     // Obtener una función por ID
     getFuncionById: (id) => {
         return axios.get(`${API_URL}/${id}`);

@@ -1,4 +1,6 @@
+// PaypalModal.jsx
 import React, { useEffect, useState } from "react";
+import "./paypal.css";
 
 function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
     const [alertVisible, setAlertVisible] = useState(false);
@@ -12,9 +14,9 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
         if (showModal) {
             const paypalContainer = document.getElementById('paypal-button-container');
             paypalContainer.innerHTML = "";
-
+    
             if (window.paypal) {
-                window.paypal.Buttons({
+                const paypalButtons = window.paypal.Buttons({
                     style: {
                         color: 'blue',
                         shape: 'pill',
@@ -45,62 +47,49 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
                         });
                     },
                     onApprove: async (data, actions) => {
-                        const details = await actions.order.capture();
-                        await handleSell(); // Espera a que la venta se procese
-
-                        setAlertMessage("¡Pago realizado con éxito!");
+                        await actions.order.capture();
+                        handleSell();
+                        setAlertMessage("¡Pago realizado exitosamente!");
                         setAlertVisible(true);
-
-                        // Si deseas mantener el modal abierto después del pago, no cierres aquí.
-                        // Puedes agregar un botón para que el usuario cierre el modal manualmente.
+                        setTimeout(() => {
+                            handleModalToggle();
+                        }, 2000);
                     },
                     onError: (err) => {
-                        console.error('Error en el pago:', err);
-                        alert('Ha ocurrido un error al procesar el pago. Por favor, inténtalo de nuevo.');
+                        console.error(err);
+                        setAlertMessage("Error al procesar el pago. Intenta nuevamente.");
+                        setAlertVisible(true);
                     }
-                }).render('#paypal-button-container');
-            } else {
-                console.error('PayPal SDK no está cargado.');
-                alert('El sistema de pagos no está disponible en este momento.');
+                });
+    
+                paypalButtons.render(paypalContainer).catch(err => {
+                    console.error("Error al renderizar el botón de PayPal:", err);
+                });
+    
+                // Limpieza al desmontar el componente
+                return () => {
+                    paypalButtons.close(); // O alguna lógica de limpieza apropiada si existe
+                };
             }
         }
-    }, [showModal, cartItems, handleSell]);
+    }, [showModal, cartItems, handleSell, handleModalToggle]);
+    
 
-    return (
-        showModal && (
-            <div className="modal show" style={{ display: "block" }}>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Carrito de Compras</h5>
-                            <button type="button" className="btn-close" onClick={handleModalToggle} aria-label="Close">X</button>
-                        </div>
-                        <div className="modal-body">
-                            {alertVisible && <div className="alert alert-success">{alertMessage}</div>}
-                            <h5>Total a Pagar: ${calcularTotal(cartItems)}</h5>
-                            <ul>
-                                {cartItems.length > 0 ? (
-                                    cartItems.map((item, index) => (
-                                        <li key={index}>
-                                            {item.nombre} -  ${item.precio * item.cantidad}
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>No hay artículos en el carrito.</li>
-                                )}
-                            </ul>
-                            <div id="paypal-button-container"></div>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={handleModalToggle}>
-                                Cerrar
-                            </button>
-                        </div>
+    return showModal ? (
+        <div className="paypal-modal">
+            <div className="paypal-modal-content">
+                <h2>Resumen de Pago</h2>
+                <p>Total a Pagar: S/. {calcularTotal(cartItems)}</p>
+                <div id="paypal-button-container"></div>
+                {alertVisible && (
+                    <div className={`alert ${alertMessage.includes("exitosamente") ? "success" : "error"}`}>
+                        {alertMessage}
                     </div>
-                </div>
+                )}
+                <button onClick={handleModalToggle}>Cerrar</button>
             </div>
-        )
-    );
+        </div>
+    ) : null;
 }
 
 export default PaypalModal;

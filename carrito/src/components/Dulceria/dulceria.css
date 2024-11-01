@@ -1,0 +1,81 @@
+.container {
+  width: 100%; /* Asegúrate de que el contenedor ocupe el 100% del ancho */
+  max-width: 1200px; /* Tamaño máximo para evitar que se estire demasiado en pantallas grandes */
+  margin: 0 auto; /* Centrar el contenedor */
+  padding: 1rem; /* Añadir un poco de padding */
+}
+
+.carrusel-container {
+  width: 100%; /* Asegúrate de que el contenedor del carrusel ocupe todo el ancho */
+  overflow: hidden; /* Evitar desbordamiento */
+  position: relative; /* Posicionamiento relativo para el carrusel */
+}
+
+.carousel-item {
+  height: auto; /* Permitir que la altura sea automática */
+  width: 100%; /* Asegúrate de que el item ocupe toda la anchura disponible */
+}
+
+.carousel-item img {
+  max-height: 400px; /* Ajusta la altura del carrusel */
+  object-fit: cover; /* Asegúrate de que la imagen cubra el área */
+  width: 100%; /* Asegúrate de que la imagen ocupe el 100% del ancho */
+  margin: auto;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para el texto */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.row {
+  display: flex; /* Habilitar flexbox */
+  flex-wrap: wrap; /* Permitir que las filas se envuelvan */
+  justify-content: center; /* Centrar los elementos dentro de la fila */
+  margin-bottom: 2rem; /* Espaciado entre filas */
+}
+
+.card {
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Evitar que las imágenes salgan de la tarjeta */
+  background-color: rgb(0, 0, 0);
+  color: white;
+}
+
+.producto-imagen {
+  border-radius: 10px; /* Bordes redondeados para la imagen */
+}
+
+/* Reducir el tamaño de la letra */
+.card-title {
+  font-size: 1.2rem; /* Tamaño de letra para el título del producto */
+}
+
+.card-text {
+  font-size: 1rem; /* Tamaño de letra para el texto del producto */
+}
+
+/* Asegúrate de que los textos de feedback también sean más pequeños */
+.mensaje-carrito p {
+  font-size: 0.9rem; /* Tamaño de letra para el mensaje de feedback */
+}
+
+.carousel-control-prev, .carousel-control-next {
+  top: 50%; /* Centra el botón verticalmente */
+  transform: translateY(-70%);
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  height: 50px; /* Tamaño del ícono */
+  width: 50px;
+}
+
+
+/* En pantallas pequeñas (por ejemplo, móviles) */
+@media (max-width: 576px) {
+  .carousel-inner {
+      flex-direction: column; /* Cambiar a disposición vertical */
+  }
+
+}

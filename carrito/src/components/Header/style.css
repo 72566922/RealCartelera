@@ -1,0 +1,15 @@
+/* style.css */
+header {
+    background-color: rgba(0, 0, 0, 0.747); /* Fondo negro semi-transparente */
+    position: fixed; /* Fijar en la parte superior */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Asegura que el header esté encima de otros elementos */
+    color: white; /* Texto blanco para buena visibilidad */
+    transition: background-color 0.3s ease; /* Transición suave en el color */
+}
+
+/* Para evitar que el contenido debajo del header se oculte */
+.main-content {
+    padding-top: 80px; /* Ajusta el espacio según la altura del header */
+}

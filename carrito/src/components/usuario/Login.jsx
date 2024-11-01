@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useAuth } from './AuthContext'; // Asegúrate de que la ruta sea correcta
 
 const Login = () => {
+  const { login } = useAuth(); // Obtener la función login del contexto
   const [gmail, setGmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -17,48 +20,55 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        // Almacenar el ID y Gmail del usuario en localStorage
-        localStorage.setItem('usuarioId', response.data.id);
-        localStorage.setItem('usuarioGmail', response.data.gmail);
+        // Almacenar el ID y Gmail del usuario en el contexto
+        login(response.data.id, response.data.gmail);
 
-        setSuccessMessage('Login successful!');
+        // Limpiar los campos después del inicio de sesión exitoso
+        setGmail('');
+        setPassword('');
+
+        setSuccessMessage('¡Inicio de sesión exitoso!');
         setErrorMessage('');
-
-        // Recargar la página después de un login exitoso
-        window.location.reload();
       }
     } catch (error) {
       setSuccessMessage('');
-      setErrorMessage('Login failed. Please check your credentials.');
+      setErrorMessage('Error en el inicio de sesión. Verifique sus credenciales.');
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Gmail:</label>
-          <input
-            type="email"
-            value={gmail}
-            onChange={(e) => setGmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+    <div className="container d-flex align-items-center justify-content-center vh-100">
+      <div className="card p-4" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Iniciar sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Gmail:</label>
+            <input
+              type="email"
+              className="form-control"
+              value={gmail}
+              onChange={(e) => setGmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Contraseña:</label>
+            <input
+              type="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">Ingresar</button>
+        </form>
+        <p className="text-center mt-3">
+          ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
+        </p>
+        {errorMessage && <p className="text-danger mt-3 text-center">{errorMessage}</p>}
+        {successMessage && <p className="text-success mt-3 text-center">{successMessage}</p>}
+      </div>
     </div>
   );
 };

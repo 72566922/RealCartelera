@@ -9,6 +9,9 @@ const BebidaService = {
   },
 
   venderBebidas: (ventas) => {
+    // Mostrar en consola los datos de ventas antes de enviarlos
+    console.log("Datos enviados para vender bebidas:", ventas);
+    
     return axios.post(`${API_URL}/vender`, ventas);
   },
 };
