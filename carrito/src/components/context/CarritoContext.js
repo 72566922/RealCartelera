@@ -130,18 +130,7 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
-    const eliminarDelCarritoBoletos = (id_asiento, id_funcion) => {
-        setCarritoBoletos(prevBoletos => {
-            const nuevosBoletos = prevBoletos.filter(boleto => !(boleto.id_asiento === id_asiento && boleto.id_funcion === id_funcion));
 
-            const hayBoletosRestantes = nuevosBoletos.some(boleto => boleto.id_funcion === id_funcion);
-            if (!hayBoletosRestantes) {
-                eliminarDelCarritoFunciones(id_funcion);
-            }
-
-            return nuevosBoletos;
-        });
-    };
 
     // Proporcionamos el estado y las funciones a los componentes que lo necesiten
     return (
@@ -155,7 +144,6 @@ export const CarritoProvider = ({ children }) => {
             agregarAlCarritoBoletos,
             eliminarDelCarritoDulceria,
             eliminarDelCarritoFunciones,
-            eliminarDelCarritoBoletos,
         }}>
             {children}
         </CarritoContext.Provider>

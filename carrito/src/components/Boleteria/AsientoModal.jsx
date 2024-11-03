@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './asientoModal.css';
 import AsientoList from './AsientoList';
 
-const AsientoModal = ({ onClose, idSala, nombreSala, sede, pelicula, idFuncion, agregarAsientosAlCarrito }) => {
+const AsientoModal = ({ onClose, idSala, nombreSala, sede, pelicula, idFuncion, agregarAsientosAlCarrito, precio}) => {
     const { agregarAlCarritoBoletos } = useCarrito(); 
     const [asientos, setAsientos] = useState([]);
     const [selectedAsientos, setSelectedAsientos] = useState(new Set());
@@ -62,6 +62,7 @@ const AsientoModal = ({ onClose, idSala, nombreSala, sede, pelicula, idFuncion, 
                     pelicula,
                     id_funcion: idFuncion,
                     nombreSala,
+                    precio,
                     sede,
                     nombre: asiento ? asiento.nombre : ''
                 };

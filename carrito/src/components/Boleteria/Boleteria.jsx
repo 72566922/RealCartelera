@@ -90,14 +90,10 @@ const Boleteria = () => {
         const funcionConDatos = {
             id: funcion.id_funcion,
             nombre: funcion.pelicula.nombre,
-            precio: funcion.precio,
+            precio: 0,
             sala: funcion.sala.nombre,
             sede: funcion.sala.sede.distrito.nombre,
-            hora: funcion.hora,
-            asientos: asientos.map(asiento => ({
-                id_asiento: asiento.id_asiento,
-                id_funcion: funcion.id_funcion
-            }))
+            hora: funcion.hora
         };
     
         agregarAlCarritoFunciones(funcionConDatos);
@@ -169,6 +165,7 @@ const Boleteria = () => {
                     sede={funcionSeleccionada.sala.sede.distrito.nombre}
                     pelicula={funcionSeleccionada.pelicula.nombre}
                     idFuncion={funcionSeleccionada.id_funcion}
+                    precio={funcionSeleccionada.precio}
                     onClose={() => setFuncionSeleccionada(null)}
                     agregarAsientosAlCarrito={(asientos) => agregarAsientosAlCarrito(funcionSeleccionada, asientos)}
                 />
