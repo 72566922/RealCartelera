@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../components/context/CarritoContext';
 import useBebidas from './hooks/useBebidas';
 import useComidas from './hooks/useComidas';
@@ -7,6 +8,8 @@ import PaypalModal from './PaypalModal';
 import './ModalCarrito.css';
 
 const ModalCarrito = ({ isOpen, onClose }) => {
+
+    const navigate = useNavigate();
     const {
         carritoDulceria,
         carritoFunciones,
@@ -127,9 +130,17 @@ const ModalCarrito = ({ isOpen, onClose }) => {
 
     const handlePaypalClick = () => {
         if (usuarioId) {
-            setMostrarPaypalModal(true);
+            if (carritoBoletos.length > 0) {
+                setMostrarPaypalModal(true);
+            } else {
+                alert("Real Cartelera solo permite la compra de dulces si viene al menos con un boleto.");
+                onClose(); // Cierra el modal
+                navigate('/pelicula'); // Redirige a la página de películas
+            }
         } else {
             alert("Debe iniciar sesión para continuar con el pago.");
+            onClose(); // Cierra el modal
+            navigate('/login'); // Redirige a la página de login
         }
     };
 
@@ -182,10 +193,7 @@ const ModalCarrito = ({ isOpen, onClose }) => {
                 </div>
 
                 <button onClick={handlePaypalClick}>Pagar con PayPal</button>
-                {mostrarPaypalModal && <PaypalModal onSuccess={handlePaymentSuccess} />}
-            </div>
-
-            {mostrarPaypalModal && (
+   
                 <PaypalModal
                     showModal={mostrarPaypalModal}
                     handleModalToggle={() => setMostrarPaypalModal(false)}
@@ -194,7 +202,10 @@ const ModalCarrito = ({ isOpen, onClose }) => {
                     usuarioId={usuarioId}
                     total={calcularTotal()}
                 />
-            )}
+          
+            </div>
+
+            
         </div>
     );
 };

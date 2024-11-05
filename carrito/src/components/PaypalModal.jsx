@@ -1,4 +1,3 @@
-// PaypalModal.jsx
 import React, { useEffect, useState } from "react";
 import "./paypal.css";
 
@@ -11,10 +10,17 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
     };
 
     useEffect(() => {
+        // Mostrar por consola si el modal está abierto o cerrado
+        if (showModal) {
+            console.log("El modal de PayPal está abierto.");
+        } else {
+            console.log("El modal de PayPal está cerrado.");
+        }
+
         if (showModal) {
             const paypalContainer = document.getElementById('paypal-button-container');
             paypalContainer.innerHTML = "";
-    
+
             if (window.paypal) {
                 const paypalButtons = window.paypal.Buttons({
                     style: {
@@ -52,7 +58,7 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
                         setAlertMessage("¡Pago realizado exitosamente!");
                         setAlertVisible(true);
                         setTimeout(() => {
-                            handleModalToggle();
+                            handleModalToggle(); // Cierra solo el modal de PayPal
                         }, 2000);
                     },
                     onError: (err) => {
@@ -61,19 +67,17 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
                         setAlertVisible(true);
                     }
                 });
-    
+
                 paypalButtons.render(paypalContainer).catch(err => {
                     console.error("Error al renderizar el botón de PayPal:", err);
                 });
-    
-                // Limpieza al desmontar el componente
+
                 return () => {
-                    paypalButtons.close(); // O alguna lógica de limpieza apropiada si existe
+                    paypalButtons.close();
                 };
             }
         }
     }, [showModal, cartItems, handleSell, handleModalToggle]);
-    
 
     return showModal ? (
         <div className="paypal-modal">
@@ -86,7 +90,7 @@ function PaypalModal({ showModal, handleModalToggle, cartItems, handleSell }) {
                         {alertMessage}
                     </div>
                 )}
-                <button onClick={handleModalToggle}>Cerrar</button>
+                <button onClick={handleModalToggle}>Cerrar</button> {/* Cierra solo el modal de PayPal */}
             </div>
         </div>
     ) : null;

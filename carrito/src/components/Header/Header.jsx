@@ -1,30 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ModalCarrito from "../ModalCarrito";
-import { useAuth } from '../usuario/AuthContext'; // Asegúrate de que la ruta sea correcta
+import { useAuth } from '../usuario/AuthContext';
+import { useCarrito } from '../context/CarritoContext'; 
+import Temporizador from "./Temporizador";
 import "./style.css";
 
-function Header() {
+function Header({ showModal }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { usuarioId, usuarioGmail, logout } = useAuth(); // Obtener estado y función de logout del contexto
+    const { usuarioId, usuarioGmail, logout } = useAuth();
+    const { carritoDulceria, carritoFunciones, carritoBoletos } = useCarrito();
+    const [mostrarTemporizador, setMostrarTemporizador] = useState(false);
+    const [temporizadorPausado, setTemporizadorPausado] = useState(false);
+    const duracionTemporizador = 240;
 
-    const abrirModal = () => {
-        setIsModalOpen(true);
-    };
+    const abrirModal = () => setIsModalOpen(true);
+    const cerrarModal = () => setIsModalOpen(false);
+    const cerrarSesion = () => logout();
 
-    const cerrarModal = () => {
-        setIsModalOpen(false);
-    };
+    useEffect(() => {
+        const tieneItemsEnCarrito = carritoDulceria.length > 0 || carritoFunciones.length > 0 || carritoBoletos.length > 0;
 
-    const cerrarSesion = () => {
-        logout(); // Utilizar la función logout del contexto
-    };
+        // Muestra el temporizador si hay artículos en el carrito
+        if (tieneItemsEnCarrito) {
+            setMostrarTemporizador(true);
+            setTemporizadorPausado(isModalOpen); // Pausar si el modal está abierto
+        } else {
+            setMostrarTemporizador(false);
+            setTemporizadorPausado(true);
+        }
+    }, [carritoDulceria, carritoFunciones, carritoBoletos, isModalOpen]); // Añadir `isModalOpen` como dependencia
 
     return (
         <header className="text-dark p-3">
             <nav className="navbar navbar-expand-lg navbar-dark container-fluid">
                 <Link className="navbar-brand" to="/">INICIO</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button 
+                    className="navbar-toggler" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
@@ -36,12 +54,18 @@ function Header() {
                             <Link className="nav-link" to="/dulceria">DULCERIA</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/register">LOGIN</Link>
+                            <Link className="nav-link" to="/login">LOGIN</Link>
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
                             <button className="btn btn-outline-light me-3" onClick={abrirModal}>Ver Carrito</button>
+                            {mostrarTemporizador && (
+                                <Temporizador 
+                                    duracion={duracionTemporizador} 
+                                    pausar={temporizadorPausado} 
+                                />
+                            )}
                         </li>
                         {usuarioGmail && usuarioId && (
                             <li className="nav-item text-end">

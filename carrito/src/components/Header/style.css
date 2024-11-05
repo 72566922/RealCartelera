@@ -1,4 +1,3 @@
-/* style.css */
 header {
     background-color: rgba(0, 0, 0, 0.747); /* Fondo negro semi-transparente */
     position: fixed; /* Fijar en la parte superior */
@@ -9,7 +8,41 @@ header {
     transition: background-color 0.3s ease; /* Transición suave en el color */
 }
 
+.navbar {
+    padding: 10px 20px; /* Espaciado interno en la barra de navegación */
+}
+
+.nav-link {
+    color: white !important; /* Asegura que los enlaces sean blancos */
+    transition: color 0.3s ease; /* Transición para hover */
+}
+
+.nav-link:hover {
+    color: #ffcc00 !important; /* Color amarillo al pasar el mouse */
+}
+
+.btn-outline-light {
+    border-color: #ffcc00; /* Cambia el color del borde */
+    color: #ffcc00; /* Cambia el color del texto */
+}
+
+.btn-outline-light:hover {
+    background-color: #ffcc00; /* Color de fondo amarillo al pasar el mouse */
+    color: black; /* Texto negro sobre fondo amarillo */
+}
+
 /* Para evitar que el contenido debajo del header se oculte */
 .main-content {
     padding-top: 80px; /* Ajusta el espacio según la altura del header */
 }
+
+/* style.css */
+.temporizador {
+    font-size: 1rem; /* Tamaño de fuente más pequeño */
+    color: #ffcc00; /* Color amarillo para destacar */
+    font-weight: bold; /* Negrita para mayor énfasis */
+    margin-right: 10px; /* Espacio entre el temporizador y el botón del carrito */
+    display: inline-block; /* Para mantener el temporizador en línea con otros elementos */
+    padding: 5px; /* Espaciado interno para que no se vea tan apretado */
+}
+
