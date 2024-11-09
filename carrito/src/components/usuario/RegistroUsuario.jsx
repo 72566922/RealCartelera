@@ -20,10 +20,11 @@ const RegistroUsuario = () => {
 
             if (response.status === 200) {
                 setMensaje('Usuario registrado con éxito');
+                console.log('Usuario registrado:', response.data);
                 // Limpiar los campos del formulario de usuario
                 setNombre('');
                 setGmail('');
-                setPassword('');
+                setPassword('');    
                 setCelular('');
             }
         } catch (error) {

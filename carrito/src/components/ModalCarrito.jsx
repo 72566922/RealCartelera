@@ -111,9 +111,9 @@ const ModalCarrito = ({ isOpen, onClose }) => {
 
             limpiarCarrito();
 
-            setTimeout(() => {
-                window.location.reload();
-            }, 8000);
+            //  setTimeout(() => {
+            //    window.location.reload();
+            // }, 8000);
 
         } catch (error) {
             console.error("Error al actualizar el stock:", error);
