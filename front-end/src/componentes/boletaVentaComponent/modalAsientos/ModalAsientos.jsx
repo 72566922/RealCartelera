@@ -14,13 +14,6 @@ function ModalAsientos({ asientos, onClose, onSelect, manejarVenta, idFuncion, n
     };
 
     const imprimirDatos = () => {
-        console.log("Datos disponibles:");
-        console.log("ID Función:", idFuncion);
-        console.log("Nombre de la Sala:", nombreSala);
-        console.log("Nombre de la Sede:", nombreSede);
-        console.log("Asientos seleccionados:", asientosSeleccionados);
-        console.log("Cantidad de asientos seleccionados:", obtenerTotalAsientos());
-        console.log("Cantidad de asientos habilitados:", contarAsientosHabilitados());
 
         // Imprimir detalles de cada asiento agregado
         asientosSeleccionados.forEach(asiento => {
@@ -61,16 +54,7 @@ function ModalAsientos({ asientos, onClose, onSelect, manejarVenta, idFuncion, n
             // Imprimir datos al agregar al carrito
             imprimirDatos();  
 
-            // Imprimir detalles de la función
-            console.log("Detalles de la función:");
-            console.log("ID Función:", idFuncion);
-            console.log("Nombre de la Sala:", nombreSala);
-            console.log("Nombre de la Sede:", nombreSede);
 
-            // Imprimir detalles de cada asiento agregado
-            asientosSeleccionados.forEach(asiento => {
-                console.log(`Asiento agregado: ID ${asiento.id_asiento}, nombre: ${asiento.nombre}, estado: ${asiento.estado}, Sala: ${asiento.sala.nombre}`);
-            });
 
             alert(`Se han agregado ${obtenerTotalAsientos()} asientos al carrito.`);
             

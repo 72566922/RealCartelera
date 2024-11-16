@@ -82,7 +82,7 @@ const FuncionesPorPelicula = ({ idPelicula, addToCart }) => {
     };
 
     const manejarVenta = (asientosSeleccionados) => {
-        console.log('Asientos para la venta:', asientosSeleccionados);
+        console.log('Asientos:', asientosSeleccionados);
     };
 
     const handleSelectAsiento = (asiento) => {

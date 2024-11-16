@@ -62,8 +62,8 @@
 }
 
 .carousel-control-prev, .carousel-control-next {
-  top: 50%; /* Centra el botón verticalmente */
-  transform: translateY(-70%);
+  top: 70%; /* Centra el botón verticalmente */
+  transform: translateY(-170%);
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {

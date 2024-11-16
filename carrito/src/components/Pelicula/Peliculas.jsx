@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Filtrar from "./Filtrar";
 import BuscarNombre from "./BuscarNombre";
 import FuncionService from "../../service/FuncionService";
+import "./filtrar.css";
 
 const imageExists = async (url) => {
     return new Promise((resolve) => {
@@ -92,7 +93,7 @@ function Peliculas() {
     if (error) return <p>{error}</p>;
 
     return (
-        <div className="container ">
+        <div className="container">
             <h3 className="text-center">Películas según las funciones</h3>
             <Filtrar setCategoriaSeleccionada={setCategoriaSeleccionada} />
             <BuscarNombre onSearch={setNombreBuscado} /> {/* Mantén el botón de búsqueda */}
@@ -102,14 +103,14 @@ function Peliculas() {
                     {peliculasFiltradasPorNombre.map((funcion) => {
                         const peliculaConImagen = imagenes.find(img => img.nombre === funcion.pelicula.nombre);
                         return (
-                            <div className="col-md-3 mb-3" key={`${funcion.id}-${funcion.pelicula.id_pelicula}`}>
+                            <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-3" key={`${funcion.id}-${funcion.pelicula.id_pelicula}`}>
                                 <div className="card">
                                     <Link to={"/boleteria"} state={{ pelicula: funcion.pelicula }}>
                                         <img
                                             src={peliculaConImagen ? peliculaConImagen.imagenUrl : defaultImageUrl}
                                             alt={peliculaConImagen ? funcion.pelicula.nombre : "Imagen no disponible"}
                                             className="card-img-top"
-                                            style={{ cursor: 'pointer', height: 'auto' }}
+                                            style={{ cursor: 'pointer' }}
                                             onClick={() => navigate('/boleteria', { state: { pelicula: funcion.pelicula } })}
                                         />
                                         <div className="card-body">
@@ -128,6 +129,7 @@ function Peliculas() {
                 <p>No hay funciones disponibles.</p>
             )}
         </div>
+
     );
 }
 

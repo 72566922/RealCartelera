@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ModalCarrito from "../ModalCarrito";
 import { useAuth } from '../usuario/AuthContext';
-import { useCarrito } from '../context/CarritoContext'; 
+import { useCarrito } from '../context/CarritoContext';
 import Temporizador from "./Temporizador";
+import { FaShoppingCart } from 'react-icons/fa';
 import "./style.css";
 
 function Header({ showModal }) {
@@ -35,13 +36,13 @@ function Header({ showModal }) {
         <header className="text-dark p-3">
             <nav className="navbar navbar-expand-lg navbar-dark container-fluid">
                 <Link className="navbar-brand" to="/">INICIO</Link>
-                <button 
-                    className="navbar-toggler" 
-                    type="button" 
-                    data-bs-toggle="collapse" 
-                    data-bs-target="#navbarNav" 
-                    aria-controls="navbarNav" 
-                    aria-expanded="false" 
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -58,12 +59,12 @@ function Header({ showModal }) {
                         </li>
                     </ul>
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
-                            <button className="btn btn-outline-light me-3" onClick={abrirModal}>Ver Carrito</button>
+                        <li className="nav-item d-flex align-items-center">
+                            <button className="btn btn-outline-light me-2" onClick={abrirModal}><FaShoppingCart /></button>
                             {mostrarTemporizador && (
-                                <Temporizador 
-                                    duracion={duracionTemporizador} 
-                                    pausar={temporizadorPausado} 
+                                <Temporizador
+                                    duracion={duracionTemporizador}
+                                    pausar={temporizadorPausado}
                                 />
                             )}
                         </li>

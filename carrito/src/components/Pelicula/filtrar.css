@@ -1,0 +1,6 @@
+.card-img-top {
+    width: 100%;           /* La imagen ocupará todo el ancho del contenedor */
+    height: 100%;         /* Ajusta la altura aquí para hacer las imágenes más altas */
+    object-fit: cover;     /* La imagen cubrirá el contenedor sin distorsionarse */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+}

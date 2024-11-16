@@ -4,6 +4,7 @@ import './styleHeader/modal.css'; // Importar el archivo CSS personalizado
 function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
   useEffect(() => {
     if (showModal) {
+      console.log("Modal está abierto"); // Imprime cuando el modal está abierto
       console.log("Artículos en el carrito:", cartItems);
 
       // Limpiar el contenedor antes de renderizar el botón de PayPal
@@ -44,6 +45,8 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
           console.error('Error en el pago: ', err);
         }
       }).render('#paypal-button-container');
+    } else {
+      console.log("Modal está cerrado"); // Imprime cuando el modal está cerrado
     }
   }, [showModal, cartItems, handleSell, handleModalToggle]);
 
@@ -70,7 +73,7 @@ function Modal({ showModal, handleModalToggle, cartItems, handleSell }) {
               </ul>
 
               {/* Contenedor para el botón de PayPal */}
-              <div id="paypal-button-container"></div>
+              <div id="paypal-button-container" data-testid="paypal-button-container"></div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={handleModalToggle}>

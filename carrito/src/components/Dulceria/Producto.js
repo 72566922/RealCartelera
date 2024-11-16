@@ -18,6 +18,10 @@ const Producto = ({ item }) => {
             agregarAlCarritoDulceria(productoConCantidad);
             setMensaje(`${item.nombre} agregado al carrito.`);
             setCantidad(1); // Resetea la cantidad después de agregar
+
+            setTimeout(() => {
+                setMensaje("");
+            }, 1500);
         } else {
             setMensaje("La cantidad debe ser al menos 1.");
         }

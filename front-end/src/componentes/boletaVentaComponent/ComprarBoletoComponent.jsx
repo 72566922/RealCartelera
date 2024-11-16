@@ -56,13 +56,7 @@ function ComprarBoletoComponent() {
             {peliculaSeleccionada ? (
                 <>
                     <PeliculaDetails pelicula={peliculaSeleccionada} />
-                    <div className="video-container text-center mt-4">
-                        <h3 className="mb-3">{peliculaSeleccionada.nombre}</h3>
-                        <video controls className="w-100" style={{ maxHeight: "500px" }}>
-                            <source src={peliculaSeleccionada.videoUrl} type="video/mp4" />
-                            Tu navegador no soporta la etiqueta de video.
-                        </video>
-                    </div>
+                    
                     <FuncionesPorPelicula 
                         idPelicula={id_pelicula} 
                         addToCart={manejarVenta} // Pasar la función manejarVenta
