@@ -5,7 +5,7 @@ import useBebidas from './hooks/useBebidas';
 import useComidas from './hooks/useComidas';
 import useBoletos from './hooks/useBoletos';
 import PaypalModal from './PaypalModal';
-import './ModalCarrito.css';
+import './ModalCarrito.css';  // Asegúrate de importar Bootstrap
 
 const ModalCarrito = ({ isOpen, onClose }) => {
 
@@ -31,7 +31,7 @@ const ModalCarrito = ({ isOpen, onClose }) => {
         const totalBoletos = carritoBoletos.reduce((total, item) => total + (item.precio * item.cantidad), 0);
         
         return (totalDulceria + totalBoletos).toFixed(2);
-    }, [carritoDulceria,carritoBoletos]);
+    }, [carritoDulceria, carritoBoletos]);
 
     useEffect(() => {
         if (isOpen) {
@@ -49,14 +49,11 @@ const ModalCarrito = ({ isOpen, onClose }) => {
         console.log("Boletos:", carritoBoletos);
 
         try {
-            const ventas = [];
-
             if (bebidas.length > 0) {
                 const bebidasData = bebidas.map(item => ({
                     id: item.id_bebida,
                     cantidadVendida: item.cantidad
                 }));
-                console.log("Datos de Bebidas a enviar:", bebidasData);
                 await venderBebidas(bebidasData);
             }
 
@@ -65,7 +62,6 @@ const ModalCarrito = ({ isOpen, onClose }) => {
                     id: item.id_comida,
                     cantidadVendida: item.cantidad
                 }));
-                console.log("Datos de Comidas a enviar:", comidasData);
                 await venderComidas(comidasData);
             }
 
@@ -75,46 +71,9 @@ const ModalCarrito = ({ isOpen, onClose }) => {
                     asiento: { id_asiento: boleto.id_asiento },
                     usuario: { id: usuarioId }
                 }));
-                console.log("Datos de Boletos a enviar:", boletosData);
-                await Promise.all(
-                    boletosData.map(boleto => registrarBoleto(boleto))
-                );
+                await Promise.all(boletosData.map(boleto => registrarBoleto(boleto)));
             }
-
-            ventas.push(...bebidas.map(item => ({
-                id: item.id_bebida,
-                tipo: 'Bebida',
-                nombre: item.nombre,
-                cantidad: item.cantidad,
-                precioUnitario: item.precio,
-                total: (item.precio * item.cantidad).toFixed(2)
-            })));
-
-            ventas.push(...comidas.map(item => ({
-                id: item.id_comida,
-                tipo: 'Comida',
-                nombre: item.nombre,
-                cantidad: item.cantidad,
-                precioUnitario: item.precio,
-                total: (item.precio * item.cantidad).toFixed(2)
-            })));
-
-            ventas.push(...carritoBoletos.map(boleto => {
-                const funcion = carritoFunciones.find(f => f.id === Number(boleto.id_funcion));
-                return {
-                    tipo: 'Boleto',
-                    funcion: { id_funcion: boleto.id_funcion, nombre: funcion ? funcion.nombre : 'Desconocido', precio: funcion ? funcion.precio : 0 },
-                    asiento: { id_asiento: boleto.id_asiento },
-                    usuario: { id: usuarioId }
-                };
-            }));
-
             limpiarCarrito();
-
-            //  setTimeout(() => {
-            //    window.location.reload();
-            // }, 8000);
-
         } catch (error) {
             console.error("Error al actualizar el stock:", error);
         }
@@ -134,78 +93,83 @@ const ModalCarrito = ({ isOpen, onClose }) => {
                 setMostrarPaypalModal(true);
             } else {
                 alert("Real Cartelera solo permite la compra de dulces si viene al menos con un boleto.");
-                onClose(); // Cierra el modal
-                navigate('/pelicula'); // Redirige a la página de películas
+                onClose();
+                navigate('/pelicula');
             }
         } else {
             alert("Debe iniciar sesión para continuar con el pago.");
-            onClose(); // Cierra el modal
-            navigate('/login'); // Redirige a la página de login
+            onClose();
+            navigate('/login');
         }
     };
 
     return (
-        <div className={`modal ${isOpen ? 'open' : ''}`} onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <h2>Carrito de Compras</h2>
-                <button onClick={onClose}>Cerrar</button>
-                <h3>Total: $/. {calcularTotal()}</h3>
-                <h4>ID de Usuario: {usuarioId}</h4>
+        <div className={`modal fade ${isOpen ? 'show' : ''}`} tabIndex="-1" role="dialog" aria-labelledby="carritoModalLabel" aria-hidden={!isOpen}>
+            <div className="modal-dialog modal-lg" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <h3>Total: $/. {calcularTotal()}</h3>
+                        <h5>ID de Usuario: {usuarioId}</h5>
 
-                <div className="productos-carrito">
-                    <h4>Productos en el Carrito:</h4>
-                    {carritoDulceria.length === 0 && carritoFunciones.length === 0 && carritoBoletos.length === 0 ? (
-                        <p>No hay productos en el carrito.</p>
-                    ) : (
-                        <>
-                            <h5>Comidas:</h5>
-                            {carritoDulceria.filter(item => item.gramos > 0).map((item) => (
-                                <div key={`comida-${item.id}`}>
-                                    <span>{item.nombre} - $/. {item.precio} x {item.cantidad} = $/. {(item.precio * item.cantidad).toFixed(2)}</span>
-                                    <button onClick={() => eliminarDelCarritoDulceria(item.id)}>Eliminar</button>
-                                </div>
-                            ))}
-                            
-                            <h5>Bebidas:</h5>
-                            {carritoDulceria.filter(item => item.litros > 0).map((item) => (
-                                <div key={`bebida-${item.id}`}>
-                                    <span>{item.nombre} - $/. {item.precio} x {item.cantidad} = $/. {(item.precio * item.cantidad).toFixed(2)}</span>
-                                    <button onClick={() => eliminarDelCarritoDulceria(item.id)}>Eliminar</button>
-                                </div>
-                            ))}
-
-                            
-                            {carritoFunciones.map((funcion) => (
-                                <div key={`funcion-${funcion.id}`}>
-                                    <h3>Funcion:</h3>
-                                    <span>ID Funcion: {funcion.id} - {funcion.sede} - {funcion.sala} - {funcion.nombre} - {funcion.hora}</span>
-                                    <h6>Boletos:</h6>
-                                    {boletosAgrupados[funcion.id] ? boletosAgrupados[funcion.id].map((boleto) => (
-                                        <div key={`boleto-${boleto.id_asiento}-${boleto.id_funcion}`}>
-                                            <span>ID: {boleto.id_asiento} - Asiento {boleto.nombre} - Precio $/. {boleto.precio}</span>
+                        <div className="productos-carrito">
+                            {carritoDulceria.length === 0 && carritoFunciones.length === 0 && carritoBoletos.length === 0 ? (
+                                <p>No hay productos en el carrito.</p>
+                            ) : (
+                                <>
+                                    <h5>Comidas:</h5>
+                                    {carritoDulceria.filter(item => item.gramos > 0).map((item) => (
+                                        <div key={`comida-${item.id}`} className="d-flex justify-content-between align-items-center mb-3">
+                                            <span>{item.nombre} - $/. {item.precio} x {item.cantidad} = $/. {(item.precio * item.cantidad).toFixed(2)}</span>
+                                            <button className="btn btn-danger" onClick={() => eliminarDelCarritoDulceria(item.id)}>Eliminar</button>
                                         </div>
-                                    )) : <p>No hay boletos para esta función.</p>}
-                                    <button onClick={() => eliminarDelCarritoFunciones(funcion.id)}>Eliminar Función</button>
-                                </div>
-                            ))}
-                        </>
-                    )}
-                </div>
+                                    ))}
 
-                <button onClick={handlePaypalClick}>Pagar con PayPal</button>
-   
-                <PaypalModal
-                    showModal={mostrarPaypalModal}
-                    handleModalToggle={() => setMostrarPaypalModal(false)}
-                    cartItems={carritoDulceria.concat(carritoFunciones).concat(carritoBoletos)}
-                    handleSell={handlePaymentSuccess}
-                    usuarioId={usuarioId}
-                    total={calcularTotal()}
-                />
-          
+                                    <h5>Bebidas:</h5>
+                                    {carritoDulceria.filter(item => item.litros > 0).map((item) => (
+                                        <div key={`bebida-${item.id}`} className="d-flex justify-content-between align-items-center mb-3">
+                                            <span>{item.nombre} - $/. {item.precio} x {item.cantidad} = $/. {(item.precio * item.cantidad).toFixed(2)}</span>
+                                            <button className="btn btn-danger" onClick={() => eliminarDelCarritoDulceria(item.id)}>Eliminar</button>
+                                        </div>
+                                    ))}
+
+                                    <h5>Funciones:</h5>
+                                    {carritoFunciones.map((funcion) => (
+                                        <div key={`funcion-${funcion.id}`} className="mb-4">
+                                            <h6>Funcion: {funcion.nombre} - {funcion.sede} - {funcion.sala} - {funcion.hora}</h6>
+                                            <h6>Boletos:</h6>
+                                            {boletosAgrupados[funcion.id] ? boletosAgrupados[funcion.id].map((boleto) => (
+                                                <div key={`boleto-${boleto.id_asiento}`} className="mb-2">
+                                                    <span>Asiento {boleto.nombre} - Precio $/. {boleto.precio}</span>
+                                                </div>
+                                            )) : <p>No hay boletos para esta función.</p>}
+                                            <button className="btn btn-danger" onClick={() => eliminarDelCarritoFunciones(funcion.id)}>Eliminar Función</button>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn btn-secondary" onClick={onClose}>Cerrar</button>
+                        <button className="btn btn-primary" onClick={handlePaypalClick}>Pagar con PayPal</button>
+                    </div>
+                </div>
             </div>
 
-            
+            <PaypalModal
+                showModal={mostrarPaypalModal}
+                handleModalToggle={() => setMostrarPaypalModal(false)}
+                cartItems={carritoDulceria.concat(carritoFunciones).concat(carritoBoletos)}
+                handleSell={handlePaymentSuccess}
+                usuarioId={usuarioId}
+                total={calcularTotal()}
+            />
         </div>
     );
 };

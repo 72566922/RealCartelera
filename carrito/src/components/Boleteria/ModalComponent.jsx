@@ -1,4 +1,4 @@
-import React from 'react';
+/**import React from 'react';
 import ModalCarrito from '../ModalCarrito';
 import AsientoModal from './AsientoModal';
 
@@ -21,3 +21,4 @@ const ModalComponent = ({ onClose, funcionSeleccionada }) => {
 };
 
 export default ModalComponent;
+ */

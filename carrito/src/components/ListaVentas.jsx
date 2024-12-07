@@ -1,4 +1,4 @@
-import React from 'react';
+/**import React from 'react';
 
 const ListaVentas = ({ ventas }) => {
     if (ventas.length === 0) {
@@ -19,3 +19,4 @@ const ListaVentas = ({ ventas }) => {
 };
 
 export default ListaVentas;
+ */

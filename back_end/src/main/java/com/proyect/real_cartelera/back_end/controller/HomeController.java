@@ -14,21 +14,21 @@ import com.paypal.base.rest.PayPalRESTException;
 import com.proyect.real_cartelera.back_end.service.PayPalService;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://18.228.4.97:3000")
 @Controller
 public class HomeController {
 
     @Autowired
     private PayPalService payPalService;
 
-    @GetMapping({ "/", "/home" })
+    @GetMapping("/")
     public String getHomePage() {
-        return "home";
+        return "forward:/build/index.html";
     }
 
-    @GetMapping({ "/inicio" })
+    @GetMapping({ "/pelicula","/dulceria","/login","/boleteria", "/register" })
     public String getInicioPage() {
-        return "inicio";
+        return "forward:/build/index.html";
     }
 
     @GetMapping({ "/aea" })
@@ -56,7 +56,7 @@ public class HomeController {
             Payment payment = payPalService.createPayment(
                     sum, "USD", "paypal",
                     "sale", "Payment description",
-                    "http://localhost:8080/cancel", "http://localhost:8080/success");
+                    "http://18.228.4.97:8080/cancel", "http://18.228.4.97:8080/success");
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
                     return "redirect:" + link.getHref();

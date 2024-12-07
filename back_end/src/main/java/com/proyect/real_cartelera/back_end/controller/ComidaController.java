@@ -21,7 +21,7 @@ public class ComidaController {
     // Obtener todas las comidas
     @GetMapping
     public List<Comida> getAllComidas() {
-        return comidaService.getAllComidas();
+        return comidaService.getComidasConUnidadesDisponibles();
     }
 
     // Obtener comida por ID

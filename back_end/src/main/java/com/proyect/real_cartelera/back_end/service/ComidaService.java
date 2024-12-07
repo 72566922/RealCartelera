@@ -20,6 +20,10 @@ public class ComidaService {
         return comidaRepository.findAll();
     }
 
+    public List<Comida> getComidasConUnidadesDisponibles() {
+        return comidaRepository.findComidasConUnidadesDisponibles();
+    }
+
     // Obtener una comida por su ID
     public Comida getComidaById(Long id) {
         Optional<Comida> comida = comidaRepository.findById(id);

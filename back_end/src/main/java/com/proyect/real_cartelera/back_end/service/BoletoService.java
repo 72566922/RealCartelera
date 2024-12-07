@@ -1,6 +1,6 @@
 package com.proyect.real_cartelera.back_end.service;
 
-import com.proyect.real_cartelera.back_end.dto.BoletoDTO;
+// import com.proyect.real_cartelera.back_end.dto.BoletoDTO;
 import com.proyect.real_cartelera.back_end.model.Boleto;
 import com.proyect.real_cartelera.back_end.model.Funcion;
 import com.proyect.real_cartelera.back_end.model.Usuario;
@@ -73,7 +73,7 @@ public class BoletoService {
     }
 
     // Método para obtener los detalles de los boletos
-    public List<BoletoDTO> getBoletoDetails() {
+    /* public List<BoletoDTO> getBoletoDetails() {
         String sql = "SELECT b.id_boleto, a.nombre AS nombre_asiento, f.hora AS hora_funcion, "
                 + " u.nombre AS nombre_usuario, "
                 + "s.nombre AS nombre_sala, s.piso AS piso_sala, "
@@ -93,5 +93,5 @@ public class BoletoService {
                 rs.getString("piso_sala"),
                 rs.getString("direccion_sede"),
                 rs.getString("nombre_distrito")));
-    }
+    } */
 }

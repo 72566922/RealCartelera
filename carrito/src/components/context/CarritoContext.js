@@ -1,15 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Creamos el contexto para el carrito de compras
+// Creamos el contexto para el carrito de compras, para poder compartir los datos de los carritos entre los componentes.
 const CarritoContext = createContext();
 
-// Proveedor del contexto que permite a los componentes acceder a los datos del carrito
+// Proveedor del contexto que permite a los componentes acceder a los datos del carrito.
 export const CarritoProvider = ({ children }) => {
+    // Estados para los tres carritos: dulcería, funciones y boletos.
     const [carritoDulceria, setCarritoDulceria] = useState([]);
     const [carritoFunciones, setCarritoFunciones] = useState([]);
     const [carritoBoletos, setCarritoBoletos] = useState([]);
 
-    // Efecto para verificar si los carritos están vacíos
+    // Efecto para verificar si los carritos están vacíos y mostrar un mensaje en la consola si es el caso.
     useEffect(() => {
         if (carritoDulceria.length === 0) {
             console.log('El carrito de dulcería está vacío.');
@@ -22,11 +23,12 @@ export const CarritoProvider = ({ children }) => {
         }
     }, [carritoDulceria, carritoFunciones, carritoBoletos]);
 
-    // Función para agregar productos al carrito de dulcería
+    // Función para agregar productos al carrito de dulcería, manejando tanto la adición de nuevos productos como la actualización de los existentes.
     const agregarAlCarritoDulceria = (item) => {
         setCarritoDulceria((prevCarrito) => {
             const existe = prevCarrito.find((producto) => producto.id === item.id);
             if (existe) {
+                // Si el producto ya existe, se actualiza su cantidad y precio total.
                 return prevCarrito.map((producto) =>
                     producto.id === item.id
                         ? {
@@ -37,11 +39,13 @@ export const CarritoProvider = ({ children }) => {
                         : producto
                 );
             } else {
+                // Si no existe, se agrega como nuevo producto al carrito.
                 return [...prevCarrito, { ...item, cantidad: item.cantidad, precioTotal: item.cantidad * item.precio }];
             }
         });
     };
 
+    // Función para agregar funciones al carrito, verificando si el asiento ya está reservado.
     const agregarAlCarritoFunciones = (item, id_asiento) => {
         console.log('Intentando agregar a funciones:', item);
 
@@ -55,6 +59,7 @@ export const CarritoProvider = ({ children }) => {
             return;
         }
 
+        // Si la función no existe en el carrito, se agrega al carrito de funciones.
         setCarritoFunciones((prevCarrito) => {
             const existe = prevCarrito.find((funcion) => funcion.id === item.id);
 
@@ -69,7 +74,7 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
-    // Función para agregar boletos al carrito
+    // Función para agregar boletos al carrito, verificando si el boleto ya está en el carrito.
     const agregarAlCarritoBoletos = (nuevoBoleto, cantidad = 1) => {
         console.log('Intentando agregar boleto:', nuevoBoleto);
 
@@ -87,6 +92,7 @@ export const CarritoProvider = ({ children }) => {
 
         const precio = nuevoBoleto.precio;
 
+        // Se agrega el boleto al carrito, calculando su precio total.
         const boletoConPrecio = {
             ...nuevoBoleto,
             precio,
@@ -98,6 +104,7 @@ export const CarritoProvider = ({ children }) => {
         setCarritoBoletos(prevBoletos => [...prevBoletos, boletoConPrecio]);
     };
 
+    // Función para limpiar todos los carritos.
     const limpiarCarrito = () => {
         setCarritoDulceria([]);
         setCarritoFunciones([]);
@@ -105,6 +112,7 @@ export const CarritoProvider = ({ children }) => {
         console.log('Todos los carritos han sido vaciados');
     };
 
+    // Función para eliminar productos del carrito de dulcería.
     const eliminarDelCarritoDulceria = (id) => {
         console.log('Eliminando del carrito de dulcería, ID:', id);
         setCarritoDulceria((prevCarrito) => {
@@ -114,6 +122,7 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
+    // Función para eliminar funciones del carrito, y también eliminar los boletos correspondientes a esa función.
     const eliminarDelCarritoFunciones = (id) => {
         console.log('Eliminando función del carrito, ID:', id);
         setCarritoFunciones((prevCarrito) => {
@@ -124,6 +133,7 @@ export const CarritoProvider = ({ children }) => {
         });
     };
 
+    // Función para eliminar los boletos de una función específica.
     const eliminarDelCarritoBoletosPorFuncion = (id_funcion) => {
         setCarritoBoletos(prevBoletos => {
             const nuevosBoletos = prevBoletos.filter(boleto => boleto.id_funcion !== id_funcion);
@@ -133,6 +143,7 @@ export const CarritoProvider = ({ children }) => {
     };
 
     return (
+        // El contexto es provisto a todos los componentes hijos.
         <CarritoContext.Provider value={{
             carritoDulceria,
             carritoFunciones,
@@ -149,7 +160,7 @@ export const CarritoProvider = ({ children }) => {
     );
 };
 
-// Hook personalizado para usar el contexto
+// Hook personalizado para usar el contexto en otros componentes.
 export const useCarrito = () => {
     return useContext(CarritoContext);
 };

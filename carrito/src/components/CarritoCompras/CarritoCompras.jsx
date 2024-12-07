@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { useCarrito } from '../context/CarritoContext'; // Asegúrate de que la ruta sea correcta
 
@@ -22,3 +23,4 @@ const CarritoCompras = () => {
 };
 
 export default CarritoCompras;
+ */

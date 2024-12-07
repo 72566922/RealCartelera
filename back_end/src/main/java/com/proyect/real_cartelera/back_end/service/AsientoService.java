@@ -11,73 +11,73 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service // Marca esta clase como un componente de servicio en Spring.
 public class AsientoService {
 
-    @Autowired
+    @Autowired // Inyección de dependencias para acceder al repositorio de asientos.
     private AsientoRepository asientoRepository;
 
-    @Autowired
+    @Autowired // Inyección de dependencias para acceder al repositorio de salas.
     private SalaRepository salaRepository;
 
-    // Obtener todos los asientos
+    // Obtiene todos los asientos.
     public List<Asiento> getAllAsientos() {
         return asientoRepository.findAll();
     }
 
-    // Obtener asientos por ID de sala
+    // Obtiene los asientos de una sala por su ID.
     public List<Asiento> getAsientosBySalaId(Long salaId) {
         Sala sala = salaRepository.findById(salaId)
-                .orElseThrow(() -> new RuntimeException("Sala no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Sala no encontrada")); // Maneja el caso donde la sala no existe.
         return asientoRepository.findBySala(sala);
     }
 
-    // Obtener un asiento por ID
+    // Obtiene un asiento por su ID.
     public Optional<Asiento> getAsientoById(Long id) {
         return asientoRepository.findById(id);
     }
 
-    // Crear un nuevo asiento
+    // Crea un nuevo asiento.
     public Asiento createAsiento(Asiento asiento) {
         return asientoRepository.save(asiento);
     }
 
-    // Agregar este método a AsientoService
+    // Actualiza el estado de un asiento (ej.: "Reservado").
     public void updateEstadoAsiento(Long asientoId, String nuevoEstado) {
         Asiento asiento = asientoRepository.findById(asientoId)
                 .orElseThrow(() -> new RuntimeException("Asiento no encontrado"));
 
-        asiento.setEstado(nuevoEstado);
-        asientoRepository.save(asiento);
+        asiento.setEstado(nuevoEstado); // Cambia el estado del asiento.
+        asientoRepository.save(asiento); // Guarda los cambios.
     }
 
-    // Actualizar un asiento existente
+    // Actualiza un asiento existente.
     public Asiento updateAsiento(Long id, Asiento asientoDetails) {
         Asiento asiento = asientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Asiento no encontrado"));
 
-        asiento.setNombre(asientoDetails.getNombre());
-        asiento.setEstado(asientoDetails.getEstado());
-        asiento.setSala(asientoDetails.getSala());
+        asiento.setNombre(asientoDetails.getNombre()); // Actualiza el nombre.
+        asiento.setEstado(asientoDetails.getEstado()); // Actualiza el estado.
+        asiento.setSala(asientoDetails.getSala()); // Actualiza la sala.
 
-        return asientoRepository.save(asiento);
+        return asientoRepository.save(asiento); // Guarda los cambios.
     }
 
-    // Eliminar un asiento por su ID
+    // Elimina un asiento por su ID.
     public void deleteAsiento(Long id) {
         asientoRepository.deleteById(id);
     }
 
-    // Deshabilitar asiento y reducir el número de asientos en la sala
+    // Deshabilita un asiento (cambia el estado y reduce el número de asientos en la sala).
     public Asiento deshabilitarAsiento(Long asientoId) {
         Asiento asiento = asientoRepository.findById(asientoId)
                 .orElseThrow(() -> new RuntimeException("Asiento no encontrado"));
 
-        asiento.setEstado("deshabilitado");
+        asiento.setEstado("deshabilitado"); // Cambia el estado.
         asientoRepository.save(asiento);
 
         Sala sala = asiento.getSala();
-        if (sala.getNum_asientos() > 0) {
+        if (sala.getNum_asientos() > 0) { // Reduce el número de asientos disponibles.
             sala.setNum_asientos(sala.getNum_asientos() - 1);
             salaRepository.save(sala);
         }
@@ -85,17 +85,17 @@ public class AsientoService {
         return asiento;
     }
 
-    // Vender asientos
+    // Marca varios asientos como vendidos.
     public void venderAsientos(List<Long> asientoIds) {
         for (Long asientoId : asientoIds) {
             Asiento asiento = asientoRepository.findById(asientoId)
                     .orElseThrow(() -> new RuntimeException("Asiento no encontrado"));
 
-            asiento.setEstado("deshabilitado");
+            asiento.setEstado("deshabilitado"); // Cambia el estado a deshabilitado.
             asientoRepository.save(asiento);
 
             Sala sala = asiento.getSala();
-            if (sala.getNum_asientos() > 0) {
+            if (sala.getNum_asientos() > 0) { // Actualiza el número de asientos disponibles.
                 sala.setNum_asientos(sala.getNum_asientos() - 1);
                 salaRepository.save(sala);
             }

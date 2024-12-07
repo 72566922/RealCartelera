@@ -1,40 +1,44 @@
 /* ModalCarrito.css */
 .modal {
-    display: none; /* Oculto por defecto */
+    display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 1050;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal.open {
-    display: block; /* Mostrar modal cuando está abierto */
+.modal.show {
+    display: block;
+}
+
+.modal-dialog {
+    max-width: 80%;
+    margin: 15% auto;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% desde la parte superior y centrado */
+    background-color: #fff;
+    border-radius: 8px;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Ancho del modal */
 }
 
 button {
-    background-color: #4CAF50; /* Verde */
+    background-color: #007bff; /* Bootstrap Primary color */
     color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049; /* Verde más oscuro */
+    background-color: #0056b3;
 }
 
-.alert {
-    color: red; /* Color de alerta */
+.modal-header, .modal-footer {
+    padding: 1rem;
+}
+
+.products-carrito {
+    margin-top: 10px;
 }

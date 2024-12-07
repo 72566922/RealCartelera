@@ -1,6 +1,6 @@
 package com.proyect.real_cartelera.back_end.controller;
 
-import com.proyect.real_cartelera.back_end.dto.BoletoDTO;
+// import com.proyect.real_cartelera.back_end.dto.BoletoDTO;
 import com.proyect.real_cartelera.back_end.model.Asiento;
 import com.proyect.real_cartelera.back_end.model.Boleto;
 import com.proyect.real_cartelera.back_end.model.Funcion;
@@ -79,10 +79,12 @@ public class BoletoController {
         return ResponseEntity.noContent().build();
     }
 
-    // Obtener detalles de boletos
+    /*
+     * / Obtener detalles de boletos
     @GetMapping("/detalles")
     public ResponseEntity<List<BoletoDTO>> getBoletoDetails() {
         List<BoletoDTO> boletoDetails = boletoService.getBoletoDetails();
         return new ResponseEntity<>(boletoDetails, HttpStatus.OK);
     }
+     */
 }

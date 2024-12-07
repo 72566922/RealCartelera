@@ -18,6 +18,10 @@ public class BebidaService {
         return bebidaRepository.findAll();
     }
 
+    public List<Bebida> getBebidasConUnidadesDisponibles() {
+        return bebidaRepository.findBebidasConUnidadesDisponibles();
+    }
+
     public Bebida getBebidaById(Long id) {
         return bebidaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bebida no encontrada"));
@@ -41,19 +45,14 @@ public class BebidaService {
             throw new IllegalArgumentException("La cantidad vendida debe ser mayor que cero.");
         }
 
-        System.out.println("ID de bebida: " + id + ", Cantidad vendida: " + cantidadVendida);
         Bebida bebida = bebidaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bebida no encontrada"));
 
-        // Verificar si hay suficientes unidades
         if (bebida.getUnidades() < cantidadVendida) {
             throw new RuntimeException("No hay suficientes unidades disponibles");
         }
 
-        // Reducir la cantidad de unidades
         bebida.setUnidades(bebida.getUnidades() - cantidadVendida);
-
-        // Guardar la bebida actualizada en la base de datos
         return bebidaRepository.save(bebida);
     }
 

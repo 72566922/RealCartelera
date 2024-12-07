@@ -20,7 +20,7 @@ public class BebidaController {
 
     @GetMapping
     public List<Bebida> getAllBebidas() {
-        return bebidaService.getAllBebidas();
+        return bebidaService.getBebidasConUnidadesDisponibles();
     }
 
     @GetMapping("/{id}")
