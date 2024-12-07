@@ -30,7 +30,7 @@ CREATE TABLE `asiento` (
   PRIMARY KEY (`id_asiento`),
   KEY `FKkso89jvvxam6yl0nt5qfyg1rp` (`id_sala`),
   CONSTRAINT `FKkso89jvvxam6yl0nt5qfyg1rp` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id_sala`)
-) ENGINE=InnoDB AUTO_INCREMENT=351 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `bebida` (
   PRIMARY KEY (`id_bebida`),
   KEY `FKcfh79bgmah44ira0wcgsyf4t6` (`id_dulce`),
   CONSTRAINT `FKcfh79bgmah44ira0wcgsyf4t6` FOREIGN KEY (`id_dulce`) REFERENCES `dulce` (`id_dulce`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `boleto` (
   CONSTRAINT `FK2wv2m5vuexmoj1va2jep5l6m` FOREIGN KEY (`id_funcion`) REFERENCES `funcion` (`id_funcion`),
   CONSTRAINT `FK4hvcieg4a6825ix872o2kumk2` FOREIGN KEY (`id_asiento`) REFERENCES `asiento` (`id_asiento`),
   CONSTRAINT `FK_boleto_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `categoria` (
   `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`id_categoria`),
   UNIQUE KEY `UK35t4wyxqrevf09uwx9e9p6o75` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,7 +146,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`id_cliente`),
   KEY `FKetx0tojxf5yevxcyt6qb526x5` (`id_usuario`),
   CONSTRAINT `FKetx0tojxf5yevxcyt6qb526x5` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `comida` (
   PRIMARY KEY (`id_comida`),
   KEY `FKhrab6ay162qv6nn6blvuumeep` (`id_dulce`),
   CONSTRAINT `FKhrab6ay162qv6nn6blvuumeep` FOREIGN KEY (`id_dulce`) REFERENCES `dulce` (`id_dulce`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +200,7 @@ CREATE TABLE `distrito` (
   `estado` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_distrito`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,7 +226,7 @@ CREATE TABLE `dulce` (
   `nombre` varchar(255) DEFAULT NULL,
   `categoria` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_dulce`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +259,7 @@ CREATE TABLE `funcion` (
   KEY `FKnu9w4japxbymxy7mqya3fo8cu` (`id_sala`),
   CONSTRAINT `FKi7tai9me0rcy9a0qcj0vei7au` FOREIGN KEY (`id_pelicula`) REFERENCES `pelicula` (`id_pelicula`),
   CONSTRAINT `FKnu9w4japxbymxy7mqya3fo8cu` FOREIGN KEY (`id_sala`) REFERENCES `sala` (`id_sala`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,7 @@ CREATE TABLE `pelicula` (
   PRIMARY KEY (`id_pelicula`),
   KEY `FK31qpyboevicc2a2mffl2el966` (`id_categoria`),
   CONSTRAINT `FK31qpyboevicc2a2mffl2el966` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `rol` (
   `estado` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +343,7 @@ CREATE TABLE `sala` (
   PRIMARY KEY (`id_sala`),
   KEY `FKrq1i5apehtuk98fyshlq4xm0q` (`id_sede`),
   CONSTRAINT `FKrq1i5apehtuk98fyshlq4xm0q` FOREIGN KEY (`id_sede`) REFERENCES `sede` (`id_sede`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -371,7 +371,7 @@ CREATE TABLE `sede` (
   PRIMARY KEY (`id_sede`),
   KEY `FKbkvowa5yj7eenax5m7chaeqm9` (`id_distrito`),
   CONSTRAINT `FKbkvowa5yj7eenax5m7chaeqm9` FOREIGN KEY (`id_distrito`) REFERENCES `distrito` (`id_distrito`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +398,7 @@ CREATE TABLE `usuario` (
   `nombre` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

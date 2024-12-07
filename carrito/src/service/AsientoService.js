@@ -1,9 +1,12 @@
+import { urlServer } from "./urlServer.js";
+
+
 // AsientoService.js
 // Se importa la librería axios para realizar peticiones HTTP.
 import axios from 'axios';
 
 // Definimos la URL base de la API que se usará para acceder a los servicios de salas y asientos.
-const API_URL = 'http://localhost:8080/api/salas';
+const API_URL = `${urlServer}/api/salas`;
 
 // Se define el objeto AsientoService que contiene funciones para interactuar con el backend.
 const AsientoService = {

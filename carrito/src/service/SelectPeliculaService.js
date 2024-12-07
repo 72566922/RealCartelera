@@ -1,7 +1,9 @@
 // src/services/SelectPeliculaService.js
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
-const API_URL = 'http://localhost:8080/api/peliculas';
+
+const API_URL = `${urlServer}/api/peliculas`;
 
 const SelectPeliculaService = {
   // Obtener todas las películas

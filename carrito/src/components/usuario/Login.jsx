@@ -2,6 +2,9 @@ import React, { useState } from 'react'; // Importa React y el hook useState
 import axios from 'axios'; // Importa axios para hacer peticiones HTTP
 import { Link } from 'react-router-dom'; // Importa el componente Link para navegación
 import { useAuth } from './AuthContext'; // Importa el hook personalizado useAuth para manejar la autenticación
+import { urlServer } from "../../service/urlServer.js";
+
+
 
 const Login = () => {
   // Obtiene la función login del contexto de autenticación
@@ -19,7 +22,7 @@ const Login = () => {
 
     try {
       // Realiza una solicitud POST al servidor para verificar las credenciales
-      const response = await axios.post('http://localhost:8080/api/usuarios/login', {
+      const response = await axios.post(`${urlServer}/api/usuarios/login`, {
         gmail, // Envía el correo electrónico
         password, // Envía la contraseña
       });

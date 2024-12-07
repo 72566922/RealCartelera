@@ -1,6 +1,7 @@
 import axios from "axios";
+import { urlServer } from "./urlServer.js";
 
-const API_URL = 'http://localhost:8080/api/funciones';
+const API_URL = `${urlServer}/api/funciones`;
 
 const FuncionService = {
 

@@ -1,7 +1,8 @@
 // src/services/SalaService.js
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
-const API_URL = 'http://localhost:8080/api/salas';
+const API_URL = `${urlServer}/api/salas`;
 
 const SalaService = {
     getAllSalas: () => {

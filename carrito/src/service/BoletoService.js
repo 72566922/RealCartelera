@@ -1,8 +1,9 @@
 // Importando axios para hacer solicitudes HTTP
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
 // Definiendo la URL base para las peticiones a la API de boletos
-const API_URL = 'http://localhost:8080/api/boletos';
+const API_URL = `${urlServer}/api/boletos`;
 
 // Definimos el objeto BoletoService que contiene las funciones para interactuar con la API
 const BoletoService = {

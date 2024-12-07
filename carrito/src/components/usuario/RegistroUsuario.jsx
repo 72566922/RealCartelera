@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; // Importa React y el hook useState para manejar el estado
 import axios from 'axios'; // Importa axios para realizar peticiones HTTP
 import { Link } from 'react-router-dom'; // Importa Link de react-router-dom para crear enlaces entre páginas
+import { urlServer } from "../../service/urlServer.js";
 
 const RegistroUsuario = () => {
     // Definición de los estados para cada campo del formulario y el mensaje de respuesta
@@ -19,7 +20,7 @@ const RegistroUsuario = () => {
 
         try {
             // Realiza una petición POST a la API para registrar al usuario
-            const response = await axios.post('http://localhost:8080/api/usuarios/register', usuarioData);
+            const response = await axios.post(`${urlServer}/api/usuarios/register`, usuarioData);
 
             // Si la respuesta es exitosa (código 200)
             if (response.status === 200) {

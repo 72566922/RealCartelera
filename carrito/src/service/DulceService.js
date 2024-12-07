@@ -1,7 +1,8 @@
 // src/services/BebidaService.js
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
-const API_URL = 'http://localhost:8080/api/dulces';
+const API_URL = `${urlServer}/api/dulces`;
 
 const DulceService = {
   getAllDulces: () => {

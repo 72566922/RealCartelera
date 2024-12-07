@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
-const API_URL = 'http://localhost:8080/api/comidas'; // Cambia esto según tu API
+const API_URL = `${urlServer}/api/comidas`; // Cambia esto según tu API
 
 const ComidaService = {
     getAllComidas: async () => {

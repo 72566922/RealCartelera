@@ -1,8 +1,9 @@
 // Importando axios para hacer peticiones HTTP
 import axios from 'axios';
+import { urlServer } from "./urlServer.js";
 
 // Definiendo la URL base para las peticiones a la API de bebidas
-const API_URL = 'http://localhost:8080/api/bebidas';
+const API_URL = `${urlServer}/api/bebidas`;
 
 // Definimos el objeto BebidaService que contiene las funciones para interactuar con la API
 const BebidaService = {
